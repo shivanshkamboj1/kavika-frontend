@@ -20,7 +20,7 @@ export const destination =[
         id:2,
         name:"kalri ",
         images:[
-            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_1_o2vbra.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746791893/photo_1_2025-05-09_17-26-31_nd8afv.jpg",
             "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_a121of.jpg",
             "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_2_olrczp.jpg"
         ]
@@ -29,7 +29,7 @@ export const destination =[
         id:3,
         name:"radaur",
         images:[
-            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_1_o2vbra.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746791894/photo_5_2025-05-09_17-26-31_att8km.jpg",
             "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_1_o2vbra.jpg",
             "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_1_o2vbra.jpg",
             "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_1_o2vbra.jpg",

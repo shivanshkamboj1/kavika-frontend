@@ -20,7 +20,10 @@ const Bookus = () => {
         {steps.map(({ id, image, text }) => (
           <div
             key={id}
-            className="flex flex-col items-center text-center p-6 shadow-lg rounded-lg bg-white hover:shadow-2xl transition"
+            className="flex flex-col items-center text-center p-6 rounded-lg bg-white transition-transform duration-300 transform hover:scale-115"
+            style={{
+              boxShadow: '0 4px 20px bg-yellow',
+            }}
           >
             <img src={image} alt={text} className="w-24 h-24 mb-6" />
             <p className="text-lg font-medium text-gray-700">{text}</p>
