@@ -40,4 +40,15 @@ export const destination =[
             "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_2_olrczp.jpg"
         ]
     }
+    ,{
+        id:4,
+        name:"aadi badri",
+        images:[
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746791894/photo_3_2025-05-09_17-26-31_emkz0b.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746791894/photo_4_2025-05-09_17-26-31_jh99bd.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746791894/photo_2_2025-05-09_17-26-31_bx8ec3.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746791894/photo_5_2025-05-09_17-26-31_att8km.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746791893/photo_1_2025-05-09_17-26-31_nd8afv.jpg"
+        ]
+    }
 ]
