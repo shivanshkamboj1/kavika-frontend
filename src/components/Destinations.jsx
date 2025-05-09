@@ -22,7 +22,7 @@ const Destinations = () => {
     }
 
     return (
-      <motion.div {...fadeVariant} className="max-w-screen-xl mx-auto px-4 py-8">
+      <motion.div {...fadeVariant} className="max-w-screen-xl mx-auto px-4 py-8 ">
         <button
           onClick={() => navigate('/destination')}
           className="mb-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
@@ -68,7 +68,7 @@ const Destinations = () => {
         {destination.map((ele) => (
           <div
             key={ele.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105"
+            className="bg-white rounded-lg shadow-md overflow-hidden z-10 border border-black transition-transform hover:scale-105 "
             onClick={() => navigate(`/destinations/${ele.id}`)}
           >
             <img

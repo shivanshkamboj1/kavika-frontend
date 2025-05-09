@@ -4,7 +4,7 @@ import Bookus from './Bookus';
 import DestinationSlider from './DestinationSlider';
 import Destinations from './Destinations';
 import About from './About';
-import AboutUs from './Testimonials';
+import Testimonial from './Testimonials';
 import ResponsiveVideoPlayer from './ResponsiveVideo';
 
 const Home = () => {
@@ -20,7 +20,7 @@ const Home = () => {
         <Destinations />
       </div>
       <About />
-      <AboutUs />
+      <Testimonial />
     </>
   );
 };

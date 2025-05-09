@@ -10,7 +10,7 @@ const Navbar = () => {
   };
   const aClass =({ isActive }) =>
       isActive
-        ? 'block text-gray-800 hover:text-blue-500 border-b-8 border-black transition-all-3s'
+        ? 'block text-blue-500 hover:text-blue-500 border-b-4 border-blue scale-120 transition-all-3s '
         : 'block text-gray-800 hover:text-blue-500'
   return (
     <header className="bg-white shadow-md sticky top-0 z-50 font-sans">
@@ -18,8 +18,8 @@ const Navbar = () => {
         Call Us: <a href="tel:+1234567890" className="underline hover:text-blue-600">+1 (234) 567-890</a>
       </div>
       <div className="max-w-screen-xl mx-auto flex justify-between items-center px-6 py-4">
-        <Link to="/" className="text-3xl font-extrabold text-blue-600 tracking-wide">
-          TravelSite
+        <Link to="/" >
+          <img src='/images/image1.png' width="150px"/>
         </Link>
 
         <nav className="hidden lg:flex space-x-8 text-lg font-medium items-baseline">

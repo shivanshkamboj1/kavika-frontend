@@ -18,8 +18,9 @@ const testimonials = [
   },
 ];
 
-const About = () => {
+const Testimonial = () => {
   return (
+    <>
     <div className="bg-white py-16 px-4 sm:px-6 lg:px-8">
       <h2 className="text-4xl font-bold text-center text-blue-600 mb-12">What Our Customers Say</h2>
 
@@ -40,7 +41,8 @@ const About = () => {
         ))}
       </div>
     </div>
+    </>
   )
 }
 
-export default About
+export default Testimonial
