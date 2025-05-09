@@ -1,0 +1,43 @@
+export const destination =[
+    {
+        id:0,
+        name:"kashmir",
+        images:[
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761871/photo-1598091383021-15ddea10925d_kdl1ml.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761870/kashmir-thumbnail2_wo6ftx.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/istockphoto-1323846766-612x612_xcwntz.jpg"
+        ]
+    },{
+        id:1,
+        name:"shimla",
+        images:[
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_1_o2vbra.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_a121of.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_2_olrczp.jpg"
+        ]
+    }
+    ,{
+        id:2,
+        name:"kalri ",
+        images:[
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_1_o2vbra.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_a121of.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_2_olrczp.jpg"
+        ]
+    }
+    ,{
+        id:3,
+        name:"radaur",
+        images:[
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_1_o2vbra.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_1_o2vbra.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_1_o2vbra.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_1_o2vbra.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_a121of.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_a121of.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_a121of.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_a121of.jpg",
+            "https://res.cloudinary.com/dreirplqv/image/upload/v1746761869/download_2_olrczp.jpg"
+        ]
+    }
+]
