@@ -30,7 +30,7 @@ const ResponsiveVideoPlayer = () => {
     <div className="w-full max-w-4xl mx-auto my-8 px-4">
       <video
         ref={videoRef}
-        src="/videos/sample.mov"
+        src="/videos/sample.mp4"
         muted
         playsInline
         className="w-full h-auto rounded-2xl shadow-lg"
