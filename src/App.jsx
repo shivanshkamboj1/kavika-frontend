@@ -42,6 +42,15 @@ function App() {
             }
           />
           <Route
+            path="/destinations/:id"
+            element={
+              <motion.div {...pageTransition}>
+                <Destinations />
+              </motion.div>
+            }
+          />
+
+          <Route
             path="/about"
             element={
               <motion.div {...pageTransition}>

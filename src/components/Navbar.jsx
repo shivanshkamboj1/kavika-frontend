@@ -14,6 +14,9 @@ const Navbar = () => {
         : 'block text-gray-800 hover:text-blue-500'
   return (
     <header className="bg-white shadow-md sticky top-0 z-50 font-sans">
+          <div className="bg-yellow-100 text-black text-center py-2 px-4 text-sm font-medium lg:hidden">
+        Call Us: <a href="tel:+1234567890" className="underline hover:text-blue-600">+1 (234) 567-890</a>
+      </div>
       <div className="max-w-screen-xl mx-auto flex justify-between items-center px-6 py-4">
         <Link to="/" className="text-3xl font-extrabold text-blue-600 tracking-wide">
           TravelSite
