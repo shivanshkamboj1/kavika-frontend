@@ -17,9 +17,9 @@ const Navbar = () => {
           <div className="bg-yellow-100 text-black text-center py-2 px-4 text-sm font-medium lg:hidden">
         Call Us: <a href="tel:+1234567890" className="underline hover:text-blue-600">+1 (234) 567-890</a>
       </div>
-      <div className="max-w-screen-xl mx-auto flex justify-between items-center px-6 py-4">
+      <div className="max-w-screen-xl mx-auto flex justify-between items-center px-6 py-1">
         <Link to="/" >
-          <img src='/images/image1.png' width="150px"/>
+          <img src='/images/image1.png' width="120px"/>
         </Link>
 
         <nav className="hidden lg:flex space-x-8 text-lg font-medium items-baseline">
