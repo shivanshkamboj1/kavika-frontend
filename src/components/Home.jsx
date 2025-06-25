@@ -13,12 +13,7 @@ const Home = () => {
       <DestinationSlider />
       <ResponsiveVideoPlayer/>
       <Bookus />
-      <div className="py-12 px-4">
-        <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-700 mb-8">
-          Our Journeys
-        </h2>
-        <Destinations />
-      </div>
+      <Destinations />
       <About />
       <Testimonial />
     </>

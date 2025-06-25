@@ -8,55 +8,47 @@ const Navbar = () => {
   const handleMenuToggle = () => {
     setMenuOpen(!menuOpen);
   };
-  const aClass =({ isActive }) =>
-      isActive
-        ? 'block text-blue-500 hover:text-blue-500 border-b-4 border-blue scale-120 transition-all-3s '
-        : 'block text-gray-800 hover:text-blue-500'
+  
+  const aClass = ({ isActive }) =>
+    isActive
+      ? 'block text-[#ffb84c] border-b-2 border-[#ffb84c] transition-colors'
+      : 'block text-[#F2E9DC] hover:text-[#ffb84c] transition-colors';
+
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50 font-sans">
-          <div className="bg-yellow-100 text-black text-center py-2 px-4 text-sm font-medium lg:hidden">
-        Call Us: <a href="tel:+1234567890" className="underline hover:text-blue-600">+1 (234) 567-890</a>
+    <header className="bg-[#0e1a2b]/80 sticky top-0 left-0 w-full z-50 backdrop-blur-md border-b border-[#ffb84c]/20">
+      {/* Small screen call banner */}
+      <div className="bg-[#132135] text-[#F2E9DC] text-center py-2 px-4 text-sm font-medium lg:hidden border-b border-[#ffb84c]/20">
+        Call Us:{' '}
+        <a href="tel:+1234567890" className="underline hover:text-[#ffb84c] transition">
+          +1 (234) 567-890
+        </a>
       </div>
-      <div className="max-w-screen-xl mx-auto flex justify-between items-center px-6 py-1">
-        <Link to="/" >
-          <img src='/images/image1.png' width="120px"/>
+
+      {/* Main navbar */}
+      <div className="max-w-screen-xl mx-auto flex justify-between items-center px-6 py-2">
+        <Link to="/">
+          <img src="/images/image1.png" width="120" alt="Kavika Travels Logo" />
         </Link>
 
-        <nav className="hidden lg:flex space-x-8 text-lg font-medium items-baseline">
-          <NavLink
-          to="/"
-              className={aClass}
-          >
-            Home
-          </NavLink>
-          <NavLink
-            to="/destination"
-            className={aClass}
-          >
-            Destinations
-          </NavLink>
-          <NavLink
-            to="/about"
-            className={aClass}
-          >
-            About
-          </NavLink>
+        {/* Desktop links */}
+        <nav className="hidden lg:flex space-x-8 text-lg font-medium items-center">
+          <NavLink to="/" className={aClass}>Home</NavLink>
+          <NavLink to="/destination" className={aClass}>Destinations</NavLink>
+          <NavLink to="/about" className={aClass}>About</NavLink>
           <a
             href="tel:+1234567890"
-            className={aClass}
-            style={{ backgroundColor: '#fff1da' }}
+            className="bg-[#132135] text-[#ffb84c] px-4 py-2 rounded-full border border-[#ffb84c]/50 hover:bg-[#ffb84c]/10 transition"
           >
             Call Us: +1 (234) 567-890
           </a>
         </nav>
 
+        {/* Mobile menu button */}
         <button
-          className="lg:hidden text-gray-800 focus:outline-none"
+          className="lg:hidden text-[#F2E9DC] focus:outline-none"
           onClick={handleMenuToggle}
         >
-        <i className="text-2xl">
-          {menuOpen ? <FaTimes /> : <FaBars />}
-        </i>
+          {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
         </button>
       </div>
 
@@ -68,34 +60,16 @@ const Navbar = () => {
         onClick={handleMenuToggle}
       >
         <div
-          className="bg-white w-3/4 h-full p-6 shadow-xl"
+          className="bg-[#132135] w-3/4 h-full p-6 shadow-xl border-r border-[#ffb84c]/20"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="space-y-6 text-lg" onClick={()=>setMenuOpen(!menuOpen)}>
-            <NavLink
-              to="/"
-              className="block text-gray-800 hover:text-blue-500"
-              activeClassName="border-b-2 border-black"
-            >
-              Home
-            </NavLink>
-            <NavLink
-              to="/destination"
-              className="block text-gray-800 hover:text-blue-500"
-              activeClassName="border-b-2 border-black"
-            >
-              Destinations
-            </NavLink>
-            <NavLink
-              to="/about"
-              className="block text-gray-800 hover:text-blue-500"
-              activeClassName="border-b-2 border-black"
-            >
-              About
-            </NavLink>
+          <div className="space-y-6 text-lg" onClick={() => setMenuOpen(!menuOpen)}>
+            <NavLink to="/" className="block text-[#F2E9DC] hover:text-[#ffb84c]">Home</NavLink>
+            <NavLink to="/destination" className="block text-[#F2E9DC] hover:text-[#ffb84c]">Destinations</NavLink>
+            <NavLink to="/about" className="block text-[#F2E9DC] hover:text-[#ffb84c]">About</NavLink>
             <a
               href="tel:+1234567890"
-              className="inline-block bg-gradient-to-r from-blue-500 to-indigo-600 text-white py-2 px-4 rounded-md hover:from-blue-600 hover:to-indigo-700 transition"
+              className="inline-block bg-[#ffb84c] text-[#132135] font-medium py-2 px-4 rounded-full hover:bg-[#ffb84c]/80 transition"
             >
               Call Us: +1 (234) 567-890
             </a>

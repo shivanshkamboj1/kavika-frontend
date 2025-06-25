@@ -5,7 +5,7 @@ import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Destinations from './components/Destinations';
-import About from './components/About';
+import Aboutus from './components/About';
 import { AnimatePresence, motion } from 'framer-motion';
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -54,7 +54,7 @@ function App() {
             path="/about"
             element={
               <motion.div {...pageTransition}>
-                <About />
+                <Aboutus />
               </motion.div>
             }
           />

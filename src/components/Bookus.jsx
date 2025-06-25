@@ -11,8 +11,8 @@ const steps = [
 
 const Bookus = () => {
   return (
-    <section className="max-w-screen-xl mx-auto px-4 py-10">
-      <h1 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-blue-700">
+    <section className="bg-[#0e1a2b] max-w-screen-xl mx-auto px-4 py-12">
+      <h1 className="text-3xl sm:text-4xl font-bold text-center mb-12 text-[#ffb84c]">
         Book Your Next Trip in 3 Easy Steps
       </h1>
 
@@ -20,13 +20,10 @@ const Bookus = () => {
         {steps.map(({ id, image, text }) => (
           <div
             key={id}
-            className="flex flex-col items-center text-center p-6 rounded-lg bg-white transition-transform duration-300 transform hover:scale-115"
-            style={{
-              boxShadow: '0 4px 20px bg-yellow',
-            }}
+            className="flex flex-col items-center text-center p-6 rounded-xl bg-[#132135] border border-[#ffb84c]/20 transform transition-transform duration-300 hover:scale-105 hover:shadow-[0_4px_20px_rgba(255,184,76,0.3)]"
           >
             <img src={image} alt={text} className="w-24 h-24 mb-6" />
-            <p className="text-lg font-medium text-gray-700">{text}</p>
+            <p className="text-lg font-medium text-[#F2E9DC]">{text}</p>
           </div>
         ))}
       </div>
