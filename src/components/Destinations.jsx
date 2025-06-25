@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 const Destinations = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [selectedImg, setSelectedImg] = useState(null); // Modal state
+  const [selectedImg, setSelectedImg] = useState(null);
 
   const fadeVariant = {
     initial: { opacity: 0, y: 20 },
@@ -19,7 +19,7 @@ const Destinations = () => {
     const dest = destination.find((ele) => ele.id === parseInt(id));
     if (!dest) {
       return (
-        <div className="text-center py-20 text-xl text-[#F2E9DC] bg-[#0e1a2b] min-h-screen">
+        <div className="text-center py-20 text-xl text-[#F2E9DC] min-h-screen bg-[#0e1a2b]">
           Destination not found
         </div>
       );
@@ -37,7 +37,7 @@ const Destinations = () => {
           ← Back to Destinations
         </button>
 
-        <h2 className="text-3xl font-extrabold mb-6 text-center text-[#F2E9DC] tracking-wide">
+        <h2 className="text-3xl font-extrabold mb-6 text-center text-[#F2E9DC]">
           {dest.name} Gallery
         </h2>
 
@@ -45,7 +45,6 @@ const Destinations = () => {
           {dest.images.map((img, idx) => (
             <img
               key={idx}
-              loading="lazy"
               src={img}
               alt={`Image ${idx + 1}`}
               className="w-full h-full object-cover rounded-xl shadow cursor-pointer transition-transform transform hover:scale-105"
@@ -54,7 +53,6 @@ const Destinations = () => {
           ))}
         </div>
 
-        {/* Modal */}
         {selectedImg && (
           <div
             className="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center"
@@ -71,30 +69,29 @@ const Destinations = () => {
     );
   }
 
-  // Destination grid view
+  // ✅ Destination grid view
   return (
     <motion.div
       {...fadeVariant}
       className="bg-[#0e1a2b] min-h-screen max-w-screen-xl mx-auto px-4 py-8"
     >
-      <h2 className="text-3xl font-bold mb-8 text-center text-[#ffb84c] tracking-wider">
+      <h2 className="text-3xl font-extrabold mb-8 text-center text-[#ffb84c] tracking-wider">
         Explore Our Destinations
       </h2>
 
-      <div className="grid gap-6 cursor-pointer grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {destination.map((ele) => (
           <div
             key={ele.id}
-            className="bg-[#132135] border border-[#ffb84c]/20 rounded-xl overflow-hidden shadow-xl transition-transform hover:scale-105 hover:shadow-2xl"
+            className="cursor-pointer transform transition-transform hover:scale-105 hover:shadow-xl"
             onClick={() => navigate(`/destinations/${ele.id}`)}
           >
             <img
-              loading="lazy"
               src={ele.images[0]}
               alt={ele.name}
-              className="w-full h-52 object-cover"
+              className="w-full h-64 object-cover rounded-2xl shadow-lg"
             />
-            <h1 className="text-lg font-semibold text-center py-4 text-[#F2E9DC]">
+            <h1 className="mt-4 text-center text-xl font-bold text-[#F2E9DC]">
               {ele.name}
             </h1>
           </div>

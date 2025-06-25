@@ -8,7 +8,7 @@ import Destinations from './components/Destinations';
 import Aboutus from './components/About';
 import { AnimatePresence, motion } from 'framer-motion';
 import 'font-awesome/css/font-awesome.min.css';
-
+import ScrollToTop from './scroll'
 
 function App() {
   const location = useLocation();
@@ -22,6 +22,7 @@ function App() {
 
   return (
     <>
+      <ScrollToTop/>
       <Navbar />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
