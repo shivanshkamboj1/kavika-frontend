@@ -6,7 +6,7 @@ const Destinations = ({ contents: passedContents }) => {
   const apiUrl = import.meta.env.VITE_API_URL;
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const cloudName = import.meta.env.VITE_CLOUD_NAME;
   const [contents, setContents] = useState(passedContents || []);
   const [loading, setLoading] = useState(!passedContents); // only show loader if empty
   useEffect(() => {
