@@ -23,26 +23,9 @@ const NextArrow = ({ onClick }) => (
   </button>
 );
 
-const DestinationSlider = () => {
+const DestinationSlider = ({contents}) => {
   const navigate = useNavigate();
-  const apiUrl = import.meta.env.VITE_API_URL;
-  const cloudName = import.meta.env.VITE_CLOUD_NAME;
 
-  const [contents, setContents] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch(`${apiUrl}/contents`, { credentials: 'include' })
-      .then((res) => res.json())
-      .then((data) => {
-        setContents(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error('Error fetching contents:', err);
-        setLoading(false);
-      });
-  }, [apiUrl]);
 
   const settings = {
     dots: true,

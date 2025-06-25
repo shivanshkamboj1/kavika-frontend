@@ -2,28 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-const Destinations = () => {
-  const apiUrl = 'http://localhost:4000/contents';
-  const cloudName = import.meta.env.VITE_CLOUD_NAME;
+const Destinations = ({ contents: passedContents }) => {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [contents, setContents] = useState([]);
-  const [selectedImg, setSelectedImg] = useState(null);
-  const [loading, setLoading] = useState(true); // 🔄 loading state
-
+  const [contents, setContents] = useState(passedContents || []);
+  const [loading, setLoading] = useState(!passedContents); // only show loader if empty
   useEffect(() => {
-    fetch(apiUrl, { credentials: 'include' })
-      .then((res) => res.json())
-      .then((data) => {
-        setContents(data);
-        setLoading(false); // ✅ stop loading
-      })
-      .catch((err) => {
-        console.error('Error fetching contents:', err);
-        setLoading(false); // ✅ stop loading even if error
-      });
-  }, []);
+    if (passedContents) return; // already loaded
+    fetch(`${apiUrl}/contents`)
+      .then(res => res.json())
+      .then(data => { setContents(data); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, [apiUrl, passedContents]);
 
   const fadeVariant = {
     initial: { opacity: 0, y: 20 },
