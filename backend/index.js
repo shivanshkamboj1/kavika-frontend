@@ -14,7 +14,7 @@ const app = express();
 
 // Middlewares
 app.use(cors({
-    origin: ['http://localhost:5173','http://localhost:5174'],
+    origin: ['http://localhost:5173','http://localhost:5174','https://kavika-frontend-5aor.vercel.app'],
     credentials: true,
   })); // Allow all origins or restrict
 app.use(cookieParser());
