@@ -8,6 +8,7 @@ const Destinations = ({ contents: passedContents }) => {
   const navigate = useNavigate();
   const cloudName = import.meta.env.VITE_CLOUD_NAME;
   const [contents, setContents] = useState(passedContents || []);
+  const [selectedImg, setSelectedImg] = useState(null);
   const [loading, setLoading] = useState(!passedContents); // only show loader if empty
   useEffect(() => {
     if (passedContents) return; // already loaded
