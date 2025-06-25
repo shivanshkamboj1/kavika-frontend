@@ -6,7 +6,7 @@ import Destinations from './Destinations';
 import About from './About';
 import Testimonial from './Testimonials';
 import ResponsiveVideoPlayer from './ResponsiveVideo';
-
+import { useState } from 'react';
 const Home = () => {
     const [contents, setContents] = useState([]);
     const [loading, setLoading] = useState(true);
