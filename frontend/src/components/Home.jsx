@@ -6,7 +6,7 @@ import Destinations from './Destinations';
 import About from './About';
 import Testimonial from './Testimonials';
 import ResponsiveVideoPlayer from './ResponsiveVideo';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 const Home = () => {
     const [contents, setContents] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -28,7 +28,7 @@ const Home = () => {
     if (loading) return <div>Loading…</div>;
   return (
     <>
-      <DestinationSlider contents={contents}/>
+      <DestinationSlider contents={contents} loading={loading}/>
       <ResponsiveVideoPlayer/>
       <Bookus />
       <Destinations contents={contents}/>

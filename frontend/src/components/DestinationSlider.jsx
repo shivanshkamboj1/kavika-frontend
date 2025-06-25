@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Slider from 'react-slick';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
@@ -6,26 +6,20 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 const PrevArrow = ({ onClick }) => (
-  <button
-    onClick={onClick}
-    className="hidden lg:flex absolute z-10 left-[-80px] top-1/2 transform -translate-y-1/2 bg-[#ffb84c] p-3 rounded-full shadow-lg hover:bg-[#ffd580]"
-  >
+  <button onClick={onClick} className="hidden lg:flex absolute left-[-80px] top-1/2 -translate-y-1/2 bg-[#ffb84c] p-3 rounded-full shadow-lg hover:bg-[#ffd580]">
     <FaChevronLeft size={24} className="text-[#0e1a2b]" />
   </button>
 );
 
 const NextArrow = ({ onClick }) => (
-  <button
-    onClick={onClick}
-    className="hidden lg:flex absolute z-10 right-[-80px] top-1/2 transform -translate-y-1/2 bg-[#ffb84c] p-3 rounded-full shadow-lg hover:bg-[#ffd580]"
-  >
+  <button onClick={onClick} className="hidden lg:flex absolute right-[-80px] top-1/2 -translate-y-1/2 bg-[#ffb84c] p-3 rounded-full shadow-lg hover:bg-[#ffd580]">
     <FaChevronRight size={24} className="text-[#0e1a2b]" />
   </button>
 );
 
-const DestinationSlider = ({contents}) => {
+const DestinationSlider = ({ contents, loading }) => {
   const navigate = useNavigate();
-
+  const cloudName = import.meta.env.VITE_CLOUD_NAME;
 
   const settings = {
     dots: true,
