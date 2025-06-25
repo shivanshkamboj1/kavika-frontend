@@ -54,7 +54,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden fixed top-0 left-0 w-full h-full backdrop-blur-sm z-40 transition-transform duration-300 ${
+        className={`lg:hidden fixed top-0 left-0 w-full h-[1080px] z-[9999]backdrop-blur-sm z-40 transition-transform duration-300 ${
           menuOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
         onClick={handleMenuToggle}
