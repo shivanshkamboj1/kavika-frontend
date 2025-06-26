@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -8,7 +8,7 @@ import Destinations from './components/Destinations';
 import Aboutus from './components/About';
 import { AnimatePresence, motion } from 'framer-motion';
 import 'font-awesome/css/font-awesome.min.css';
-import ScrollToTop from './scroll'
+import ScrollToTop from './scroll';
 
 function App() {
   const location = useLocation();
@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <ScrollToTop/>
+      <ScrollToTop />
       <Navbar />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
@@ -50,7 +50,6 @@ function App() {
               </motion.div>
             }
           />
-
           <Route
             path="/about"
             element={
@@ -59,8 +58,17 @@ function App() {
               </motion.div>
             }
           />
+
+          {/* Catch-all route */}
+          <Route
+            path="*"
+            element={
+              <motion.div {...pageTransition}>
+                <Navigate to="/" replace />
+              </motion.div>
+            }
+          />
         </Routes>
-        <Route path="*" element={<Navigate to="/" />} />
       </AnimatePresence>
       <Footer />
     </>
