@@ -6,13 +6,19 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 const PrevArrow = ({ onClick }) => (
-  <button onClick={onClick} className="hidden lg:flex absolute left-[-80px] top-1/2 -translate-y-1/2 bg-[#ffb84c] p-3 rounded-full shadow-lg hover:bg-[#ffd580]">
+  <button
+    onClick={onClick}
+    className="hidden lg:flex absolute left-[-80px] top-1/2 -translate-y-1/2 bg-[#ffb84c] p-3 rounded-full shadow-lg hover:bg-[#ffd580]"
+  >
     <FaChevronLeft size={24} className="text-[#0e1a2b]" />
   </button>
 );
 
 const NextArrow = ({ onClick }) => (
-  <button onClick={onClick} className="hidden lg:flex absolute right-[-80px] top-1/2 -translate-y-1/2 bg-[#ffb84c] p-3 rounded-full shadow-lg hover:bg-[#ffd580]">
+  <button
+    onClick={onClick}
+    className="hidden lg:flex absolute right-[-80px] top-1/2 -translate-y-1/2 bg-[#ffb84c] p-3 rounded-full shadow-lg hover:bg-[#ffd580]"
+  >
     <FaChevronRight size={24} className="text-[#0e1a2b]" />
   </button>
 );
@@ -55,25 +61,33 @@ const DestinationSlider = ({ contents, loading }) => {
 
       <div className="relative max-w-screen-xl mx-auto px-4 overflow-visible">
         <Slider {...settings} className="overflow-visible">
-          {contents.map((ele) => (
-            <div
-              key={ele._id}
-              className="px-4 cursor-pointer"
-              onClick={() => navigate(`/destinations/${ele._id}`)}
-            >
-              <div className="relative rounded-2xl shadow-xl border border-[#ffb84c]/20 bg-[#132135] transform transition-transform duration-300 hover:scale-105">
-                <img
-                  src={`https://res.cloudinary.com/${cloudName}/image/upload/${ele.coverImage}.jpg`}
-                  alt={ele.name}
-                  className="w-full h-[320px] object-cover opacity-90 hover:opacity-100 transition-opacity duration-300 rounded-2xl"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-2xl"></div>
-                <h1 className="absolute bottom-4 left-0 right-0 text-center text-xl sm:text-2xl font-bold text-[#F2E9DC] drop-shadow-xl">
-                  {ele.name}
-                </h1>
+          {contents.map((ele) => {
+            const firstPackage = ele.packages && ele.packages.length > 0 ? ele.packages[0] : null;
+            return (
+              <div
+                key={ele._id}
+                className="px-4 cursor-pointer"
+                onClick={() => navigate(`/destinations/${ele._id}`)}
+              >
+                <div className="relative rounded-2xl shadow-xl border border-[#ffb84c]/20 bg-[#132135] transform transition-transform duration-300 hover:scale-105">
+                  <img
+                    src={`https://res.cloudinary.com/${cloudName}/image/upload/${ele.coverImage}.jpg`}
+                    alt={ele.name}
+                    className="w-full h-[320px] object-cover opacity-90 hover:opacity-100 transition-opacity duration-300 rounded-2xl"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-2xl"></div>
+                  <div className="absolute bottom-4 left-0 right-0 text-center text-[#F2E9DC] drop-shadow-xl px-2">
+                    <h1 className="text-xl sm:text-2xl font-bold mb-1">{ele.name}</h1>
+                    {firstPackage && (
+                      <p className="text-sm sm:text-base text-[#ffb84c] font-medium truncate">
+                        {firstPackage}
+                      </p>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </Slider>
       </div>
     </section>

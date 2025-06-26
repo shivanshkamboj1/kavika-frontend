@@ -10,11 +10,15 @@ const Destinations = ({ contents: passedContents }) => {
   const [contents, setContents] = useState(passedContents || []);
   const [selectedImg, setSelectedImg] = useState(null);
   const [loading, setLoading] = useState(!passedContents); // only show loader if empty
+
   useEffect(() => {
     if (passedContents) return; // already loaded
     fetch(`${apiUrl}/contents`)
       .then(res => res.json())
-      .then(data => { setContents(data); setLoading(false); })
+      .then(data => {
+        setContents(data);
+        setLoading(false);
+      })
       .catch(() => setLoading(false));
   }, [apiUrl, passedContents]);
 
@@ -25,7 +29,6 @@ const Destinations = ({ contents: passedContents }) => {
     transition: { duration: 0.3 },
   };
 
-  // 🔄 Loader component
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0e1a2b] flex items-center justify-center">
@@ -60,7 +63,19 @@ const Destinations = ({ contents: passedContents }) => {
           {dest.name} Gallery
         </h2>
 
-        {/* Images */}
+        {/* 📦 Packages section */}
+        {dest.packages && dest.packages.length > 0 && (
+          <div className="bg-[#132435] p-4 rounded-xl mb-8 border border-[#ffb84c]/50 shadow-md">
+            <h3 className="text-xl font-semibold text-[#ffb84c] mb-2">Packages</h3>
+            <ul className="list-disc list-inside text-[#F2E9DC] space-y-1">
+              {dest.packages.map((pkg, index) => (
+                <li key={index}>{pkg}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* 🖼️ Images */}
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-8">
           {dest.image?.map((img, idx) => (
             <img
@@ -77,8 +92,8 @@ const Destinations = ({ contents: passedContents }) => {
           ))}
         </div>
 
-        {/* Videos */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* 🎥 Videos */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
           {dest.video?.map((vid, idx) => (
             <video
               key={idx}
@@ -88,12 +103,12 @@ const Destinations = ({ contents: passedContents }) => {
               muted
               playsInline
               loop
-              controls={false} // optional: hide controls if you want purely autoplay
+              controls={false}
             />
           ))}
         </div>
 
-        {/* Fullscreen image preview */}
+        {/* 🖼️ Fullscreen image preview */}
         {selectedImg && (
           <div
             className="fixed inset-0 z-50 bg-black bg-opacity-80 flex items-center justify-center p-4"

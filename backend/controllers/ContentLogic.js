@@ -12,7 +12,8 @@ const uploadFile = async (filePath, resourceType = 'image') => {
 // POST /contents
 exports.createContent = async (req, res) => {
   try {
-    const { name } = req.body
+    const { name,packages  } = req.body
+    const packagesArray = Array.isArray(packages) ? packages : packages ? [packages] : []
     if (!name) return res.status(400).json({ message: 'Name is required!' })
     if (!req.files?.coverImage) return res.status(400).json({ message: 'Cover image is required!' })
 
@@ -30,7 +31,7 @@ exports.createContent = async (req, res) => {
       : []
 
     // Save to MongoDB
-    const content = new Content({ name, coverImage, image, video })
+    const content = new Content({ name, coverImage, image, video,packages: packagesArray })
     await content.save()
 
     return res.status(201).json({ message: 'Content created!', content })
@@ -84,14 +85,16 @@ exports.deleteContent = async (req, res) => {
 exports.updateContent = async (req, res) => {
   try {
     const { id } = req.params
-    const { name, removeImageIds = [], removeVideoIds = [] } = req.body
+    const { name,packages, removeImageIds = [], removeVideoIds = [] } = req.body
 
     let content = await Content.findById(id)
     if (!content) return res.status(404).json({ message: 'Content not found!' })
 
     // Update name
     if (name) content.name = name
-
+    if (packages) {
+      content.packages = Array.isArray(packages) ? packages : [packages]
+    }
     // Replace cover image
     if (req.files?.coverImage?.[0]) {
       await cloudinary.uploader.destroy(content.coverImage, { resource_type: 'image' })

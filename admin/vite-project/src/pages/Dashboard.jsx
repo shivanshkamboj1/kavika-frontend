@@ -6,21 +6,21 @@ export default function Dashboard() {
 
   const [contents, setContents] = useState([]);
   const [name, setName] = useState('');
-  const [coverImageFile, setCoverImageFile] = useState(null); // NEW cover image
+  const [coverImageFile, setCoverImageFile] = useState(null);
   const [imageFiles, setImageFiles] = useState([]);
   const [videoFiles, setVideoFiles] = useState([]);
+  const [packages, setPackages] = useState(['']); // NEW packages state
 
   // Edit states
-  const [isEditing, setIsEditing] = useState(null); 
+  const [isEditing, setIsEditing] = useState(null);
   const [editName, setEditName] = useState('');
-  const [editCoverFile, setEditCoverFile] = useState(null); // optional new cover
+  const [editCoverFile, setEditCoverFile] = useState(null);
   const [editImages, setEditImages] = useState([]);
   const [editVideos, setEditVideos] = useState([]);
+  const [editPackages, setEditPackages] = useState([]); // NEW edit packages
 
   useEffect(() => {
-    fetch(`${apiUrl}/contents`, { credentials: 'include' })
-      .then((res) => res.json())
-      .then((data) => setContents(data));
+    reloadContents();
   }, [apiUrl]);
 
   const reloadContents = async () => {
@@ -30,16 +30,14 @@ export default function Dashboard() {
 
   const handleAdd = async (e) => {
     e.preventDefault();
-
-    if (!coverImageFile) {
-      return alert('Cover image is required');
-    }
+    if (!coverImageFile) return alert('Cover image is required');
 
     const formData = new FormData();
     formData.append('name', name);
-    formData.append('coverImage', coverImageFile); // cover image
+    formData.append('coverImage', coverImageFile);
     Array.from(imageFiles).forEach((img) => formData.append('images', img));
     Array.from(videoFiles).forEach((vid) => formData.append('videos', vid));
+    Array.from(packages).forEach((pkg) => formData.append('packages', pkg)); // ✅ append packages
 
     const res = await fetch(`${apiUrl}/contents`, {
       method: 'POST',
@@ -52,6 +50,7 @@ export default function Dashboard() {
       setCoverImageFile(null);
       setImageFiles([]);
       setVideoFiles([]);
+      setPackages(['']);
       reloadContents();
     } else {
       const err = await res.json();
@@ -72,6 +71,7 @@ export default function Dashboard() {
     setEditCoverFile(null);
     setEditImages([]);
     setEditVideos([]);
+    setEditPackages(content.packages || []); // ✅ load existing packages
   };
 
   const handleUpdate = async (e) => {
@@ -79,9 +79,10 @@ export default function Dashboard() {
 
     const formData = new FormData();
     if (editName) formData.append('name', editName);
-    if (editCoverFile) formData.append('coverImage', editCoverFile); // optional new cover
+    if (editCoverFile) formData.append('coverImage', editCoverFile);
     Array.from(editImages).forEach((img) => formData.append('images', img));
     Array.from(editVideos).forEach((vid) => formData.append('videos', vid));
+    Array.from(editPackages).forEach((pkg) => formData.append('packages', pkg)); // ✅ append packages
 
     const res = await fetch(`${apiUrl}/contents/${isEditing}`, {
       method: 'PUT',
@@ -95,6 +96,7 @@ export default function Dashboard() {
       setEditCoverFile(null);
       setEditImages([]);
       setEditVideos([]);
+      setEditPackages([]);
       reloadContents();
     } else {
       alert('Error updating content.');
@@ -115,33 +117,36 @@ export default function Dashboard() {
           required
         />
         <label>Cover Image (required)</label>
-        <input
-          type="file"
-          className="w-full"
-          accept="image/*"
-          onChange={(e) => setCoverImageFile(e.target.files[0])}
-          required
-        />
+        <input type="file" className="w-full" accept="image/*" onChange={(e) => setCoverImageFile(e.target.files[0])} required />
+
         <label>Additional Images</label>
-        <input
-          type="file"
-          className="w-full"
-          accept="image/*"
-          multiple
-          onChange={(e) => setImageFiles(e.target.files)}
-        />
+        <input type="file" className="w-full" accept="image/*" multiple onChange={(e) => setImageFiles(e.target.files)} />
+
         <label>Videos</label>
-        <input
-          type="file"
-          className="w-full"
-          accept="video/*"
-          multiple
-          onChange={(e) => setVideoFiles(e.target.files)}
-        />
+        <input type="file" className="w-full" accept="video/*" multiple onChange={(e) => setVideoFiles(e.target.files)} />
+
+        <label>Packages</label>
+        {packages.map((pkg, index) => (
+          <input
+            key={index}
+            className="w-full border p-2 mb-1"
+            placeholder="e.g. 3 nights 2 days 5000rs"
+            value={pkg}
+            onChange={(e) => {
+              const newPackages = [...packages];
+              newPackages[index] = e.target.value;
+              setPackages(newPackages);
+            }}
+          />
+        ))}
+        <button type="button" className="bg-gray-200 px-2 py-1 rounded" onClick={() => setPackages((prev) => [...prev, ''])}>
+          + Add Another Package
+        </button>
+
         <button className="bg-green-600 text-white px-4 py-2 rounded">Add Content</button>
       </form>
 
-      {/* list */}
+      {/* List */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {contents.map((c) => (
           <div key={c._id} className="bg-white p-4 rounded shadow relative">
@@ -152,36 +157,36 @@ export default function Dashboard() {
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
                 />
+
                 <label>New Cover Image</label>
-                <input
-                  type="file"
-                  className="w-full"
-                  accept="image/*"
-                  onChange={(e) => setEditCoverFile(e.target.files[0])}
-                />
+                <input type="file" className="w-full" accept="image/*" onChange={(e) => setEditCoverFile(e.target.files[0])} />
+
                 <label>New Images</label>
-                <input
-                  type="file"
-                  className="w-full"
-                  accept="image/*"
-                  multiple
-                  onChange={(e) => setEditImages(e.target.files)}
-                />
+                <input type="file" className="w-full" accept="image/*" multiple onChange={(e) => setEditImages(e.target.files)} />
+
                 <label>New Videos</label>
-                <input
-                  type="file"
-                  className="w-full"
-                  accept="video/*"
-                  multiple
-                  onChange={(e) => setEditVideos(e.target.files)}
-                />
+                <input type="file" className="w-full" accept="video/*" multiple onChange={(e) => setEditVideos(e.target.files)} />
+
+                <label>Edit Packages</label>
+                {editPackages.map((pkg, index) => (
+                  <input
+                    key={index}
+                    className="w-full border p-2 mb-1"
+                    value={pkg}
+                    onChange={(e) => {
+                      const newPackages = [...editPackages];
+                      newPackages[index] = e.target.value;
+                      setEditPackages(newPackages);
+                    }}
+                  />
+                ))}
+                <button type="button" className="bg-gray-200 px-2 py-1 rounded" onClick={() => setEditPackages((prev) => [...prev, ''])}>
+                  + Add Another Package
+                </button>
+
                 <div className="flex space-x-2">
                   <button className="bg-blue-600 text-white px-3 py-1 rounded">Save</button>
-                  <button
-                    type="button"
-                    className="bg-gray-400 text-white px-3 py-1 rounded"
-                    onClick={() => setIsEditing(null)}
-                  >
+                  <button type="button" className="bg-gray-400 text-white px-3 py-1 rounded" onClick={() => setIsEditing(null)}>
                     Cancel
                   </button>
                 </div>
@@ -189,7 +194,7 @@ export default function Dashboard() {
             ) : (
               <>
                 <h3 className="text-xl font-semibold mb-2">{c.name}</h3>
-                {/* Cover image */}
+
                 {c.coverImage && (
                   <img
                     src={`https://res.cloudinary.com/${cloudName}/image/upload/${c.coverImage}.jpg`}
@@ -197,27 +202,34 @@ export default function Dashboard() {
                     alt={c.name}
                   />
                 )}
-                {/* Images */}
+
                 <div className="grid grid-cols-2 gap-2 mb-2">
-                  {c.image &&
-                    c.image.map((imgId) => (
-                      <img
-                        key={imgId}
-                        src={`https://res.cloudinary.com/${cloudName}/image/upload/${imgId}.jpg`}
-                        className="w-full h-32 object-cover"
-                        alt={c.name}
-                      />
-                    ))}
+                  {c.image?.map((imgId) => (
+                    <img
+                      key={imgId}
+                      src={`https://res.cloudinary.com/${cloudName}/image/upload/${imgId}.jpg`}
+                      className="w-full h-32 object-cover"
+                      alt={c.name}
+                    />
+                  ))}
                 </div>
-                {/* Videos */}
+
                 <div className="grid grid-cols-1 gap-2 mb-2">
-                  {c.video &&
-                    c.video.map((vidId) => (
-                      <video key={vidId} className="w-full h-32 object-cover" controls>
-                        <source src={`https://res.cloudinary.com/${cloudName}/video/upload/${vidId}.mp4`} type="video/mp4" />
-                      </video>
-                    ))}
+                  {c.video?.map((vidId) => (
+                    <video key={vidId} className="w-full h-32 object-cover" controls>
+                      <source src={`https://res.cloudinary.com/${cloudName}/video/upload/${vidId}.mp4`} type="video/mp4" />
+                    </video>
+                  ))}
                 </div>
+
+                {c.packages && c.packages.length > 0 && (
+                  <ul className="list-disc list-inside mb-2 text-sm text-gray-700">
+                    {c.packages.map((pkg, idx) => (
+                      <li key={idx}>{pkg}</li>
+                    ))}
+                  </ul>
+                )}
+
                 <div className="flex space-x-2 mt-2">
                   <button
                     onClick={() => handleEditClick(c)}

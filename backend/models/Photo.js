@@ -15,7 +15,8 @@ const Photoschema = new mongoose.Schema({
     video:{
         type:[String],
         default: [], 
-    }
+    },
+    packages: { type: [String], default: [] }
 },{timestamps:true})
 
 module.exports = mongoose.model("Content",Photoschema)
