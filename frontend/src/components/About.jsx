@@ -22,8 +22,8 @@ const AboutUs = () => {
         <div className="flex flex-col md:flex-row justify-between items-center mt-12 gap-8 border-t border-[#ffb84c]/40 pt-8">
           <div className="text-left space-y-2 text-xl text-white/90">
             <p><span className="font-semibold text-[#ffb84c]">Name:</span> Prince</p>
-            <p><span className="font-semibold text-[#ffb84c]">Address:</span> VPO Karnal</p>
-            <p><span className="font-semibold text-[#ffb84c]">Mobile:</span> 8708606666</p>
+            <p><span className="font-semibold text-[#ffb84c]">Address:</span> Plot Number - C6783, Near Deep Chand Bandhu Hospital, Ashok Vihar 4-110052</p>
+            <p><span className="font-semibold text-[#ffb84c]">Mobile:</span> 9355580007</p>
             <p><span className="font-semibold text-[#ffb84c]">Available:</span> All days, 9 AM – 9 PM</p>
           </div>
           <img src={Logo} alt="Kavika Travels Logo" className="h-28 w-auto drop-shadow-xl" />
@@ -33,7 +33,7 @@ const AboutUs = () => {
         <div className="space-y-4">
           <h3 className="text-2xl font-semibold text-[#ffb84c]">Why Choose Us?</h3>
           <ul className="list-disc list-inside space-y-2 text-white/90 marker:text-[#ffb84c]">
-            <li>🌍 Carefully crafted tours in over 50 countries</li>
+            <li>🌍 Carefully crafted tours in over 50 Destinations</li>
             <li>🧭 Friendly local guides for immersive experiences</li>
             <li>🛡️ End-to-end travel planning with 24/7 support</li>
             <li>💬 Loved by 10,000+ travelers (4.9/5 avg. rating)</li>

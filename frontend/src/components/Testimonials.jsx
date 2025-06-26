@@ -1,9 +1,9 @@
 import React from 'react';
 
 const testimonials = [
-  { name: "John Doe", feedback: "This travel experience was life-changing. The service was exceptional!", image: "https://randomuser.me/api/portraits/men/32.jpg" },
-  { name: "Jane Smith", feedback: "Absolutely loved the destination and the smooth planning. Highly recommended!", image: "https://randomuser.me/api/portraits/women/44.jpg" },
-  { name: "Mark Lee", feedback: "One of the best trips I've ever taken. Everything was well-organized.", image: "https://randomuser.me/api/portraits/men/54.jpg" },
+  { name: "Anuj kamboj", feedback: "This travel experience was life-changing. The service was exceptional!", image: "https://randomuser.me/api/portraits/men/32.jpg" },
+  { name: "Vishal", feedback: "Absolutely loved the destination and the smooth planning. Highly recommended!", image: "https://randomuser.me/api/portraits/women/44.jpg" },
+  { name: "Narendar kumar", feedback: "One of the best trips I've ever taken. Everything was well-organized.", image: "https://randomuser.me/api/portraits/men/54.jpg" },
 ];
 
 const Testimonial = () => {

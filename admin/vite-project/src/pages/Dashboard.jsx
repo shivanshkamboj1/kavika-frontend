@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 export default function Dashboard() {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -9,7 +10,7 @@ export default function Dashboard() {
   const [coverImageFile, setCoverImageFile] = useState(null);
   const [imageFiles, setImageFiles] = useState([]);
   const [videoFiles, setVideoFiles] = useState([]);
-  const [packages, setPackages] = useState(['']); // NEW packages state
+  const [packages, setPackages] = useState(['']);
 
   // Edit states
   const [isEditing, setIsEditing] = useState(null);
@@ -17,51 +18,72 @@ export default function Dashboard() {
   const [editCoverFile, setEditCoverFile] = useState(null);
   const [editImages, setEditImages] = useState([]);
   const [editVideos, setEditVideos] = useState([]);
-  const [editPackages, setEditPackages] = useState([]); // NEW edit packages
+  const [editPackages, setEditPackages] = useState([]);
 
   useEffect(() => {
     reloadContents();
   }, [apiUrl]);
 
   const reloadContents = async () => {
-    const data = await fetch(`${apiUrl}/contents`, { credentials: 'include' }).then((r) => r.json());
+    const data = await fetch(`${apiUrl}/contents`, { credentials: 'include' })
+      .then((r) => r.json());
     setContents(data);
   };
 
   const handleAdd = async (e) => {
     e.preventDefault();
-    if (!coverImageFile) return alert('Cover image is required');
+    if (!coverImageFile) return toast.error('Cover image is required');
 
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('coverImage', coverImageFile);
-    Array.from(imageFiles).forEach((img) => formData.append('images', img));
-    Array.from(videoFiles).forEach((vid) => formData.append('videos', vid));
-    Array.from(packages).forEach((pkg) => formData.append('packages', pkg)); // ✅ append packages
+    const toastId = toast.loading('Uploading...');
+    try {
+      const formData = new FormData();
+      formData.append('name', name);
+      formData.append('coverImage', coverImageFile);
+      Array.from(imageFiles).forEach((img) => formData.append('images', img));
+      Array.from(videoFiles).forEach((vid) => formData.append('videos', vid));
+      Array.from(packages).forEach((pkg) => formData.append('packages', pkg));
 
-    const res = await fetch(`${apiUrl}/contents`, {
-      method: 'POST',
-      body: formData,
-      credentials: 'include',
-    });
+      const res = await fetch(`${apiUrl}/contents`, {
+        method: 'POST',
+        body: formData,
+        credentials: 'include',
+      });
 
-    if (res.ok) {
-      setName('');
-      setCoverImageFile(null);
-      setImageFiles([]);
-      setVideoFiles([]);
-      setPackages(['']);
-      reloadContents();
-    } else {
-      const err = await res.json();
-      alert(`Error: ${err.message}`);
+      toast.dismiss(toastId); // hide loader
+
+      if (res.ok) {
+        toast.success('Content uploaded successfully!');
+        setName('');
+        setCoverImageFile(null);
+        setImageFiles([]);
+        setVideoFiles([]);
+        setPackages(['']);
+        reloadContents();
+      } else {
+        const err = await res.json();
+        toast.error(`Error: ${err.message || 'Upload failed'}`);
+      }
+    } catch (error) {
+      toast.dismiss(toastId);
+      toast.error('Error uploading content.');
     }
   };
 
   const handleDelete = async (id) => {
     if (window.confirm('Delete this content?')) {
-      const res = await fetch(`${apiUrl}/contents/${id}`, { method: 'DELETE', credentials: 'include' });
-      if (res.ok) reloadContents();
+      const toastId = toast.loading('Deleting...');
+      const res = await fetch(`${apiUrl}/contents/${id}`, {
+        method: 'DELETE',
+        credentials: 'include',
+      });
+
+      toast.dismiss(toastId); // hide loader
+      if (res.ok) {
+        toast.success('Deleted successfully');
+        reloadContents();
+      } else {
+        toast.error('Error deleting content.');
+      }
     }
   };
 
@@ -71,35 +93,44 @@ export default function Dashboard() {
     setEditCoverFile(null);
     setEditImages([]);
     setEditVideos([]);
-    setEditPackages(content.packages || []); // ✅ load existing packages
+    setEditPackages(content.packages || []);
   };
 
   const handleUpdate = async (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
-    if (editName) formData.append('name', editName);
-    if (editCoverFile) formData.append('coverImage', editCoverFile);
-    Array.from(editImages).forEach((img) => formData.append('images', img));
-    Array.from(editVideos).forEach((vid) => formData.append('videos', vid));
-    Array.from(editPackages).forEach((pkg) => formData.append('packages', pkg)); // ✅ append packages
+    const toastId = toast.loading('Updating...');
+    try {
+      const formData = new FormData();
+      if (editName) formData.append('name', editName);
+      if (editCoverFile) formData.append('coverImage', editCoverFile);
+      Array.from(editImages).forEach((img) => formData.append('images', img));
+      Array.from(editVideos).forEach((vid) => formData.append('videos', vid));
+      Array.from(editPackages).forEach((pkg) => formData.append('packages', pkg));
 
-    const res = await fetch(`${apiUrl}/contents/${isEditing}`, {
-      method: 'PUT',
-      body: formData,
-      credentials: 'include',
-    });
+      const res = await fetch(`${apiUrl}/contents/${isEditing}`, {
+        method: 'PUT',
+        body: formData,
+        credentials: 'include',
+      });
 
-    if (res.ok) {
-      setIsEditing(null);
-      setEditName('');
-      setEditCoverFile(null);
-      setEditImages([]);
-      setEditVideos([]);
-      setEditPackages([]);
-      reloadContents();
-    } else {
-      alert('Error updating content.');
+      toast.dismiss(toastId); // hide loader
+
+      if (res.ok) {
+        toast.success('Updated successfully!');
+        setIsEditing(null);
+        setEditName('');
+        setEditCoverFile(null);
+        setEditImages([]);
+        setEditVideos([]);
+        setEditPackages([]);
+        reloadContents();
+      } else {
+        toast.error('Error updating content.');
+      }
+    } catch (error) {
+      toast.dismiss(toastId);
+      toast.error('Error updating content.');
     }
   };
 
@@ -117,13 +148,31 @@ export default function Dashboard() {
           required
         />
         <label>Cover Image (required)</label>
-        <input type="file" className="w-full" accept="image/*" onChange={(e) => setCoverImageFile(e.target.files[0])} required />
+        <input
+          type="file"
+          className="w-full"
+          accept="image/*"
+          onChange={(e) => setCoverImageFile(e.target.files[0])}
+          required
+        />
 
         <label>Additional Images</label>
-        <input type="file" className="w-full" accept="image/*" multiple onChange={(e) => setImageFiles(e.target.files)} />
+        <input
+          type="file"
+          className="w-full"
+          accept="image/*"
+          multiple
+          onChange={(e) => setImageFiles(e.target.files)}
+        />
 
         <label>Videos</label>
-        <input type="file" className="w-full" accept="video/*" multiple onChange={(e) => setVideoFiles(e.target.files)} />
+        <input
+          type="file"
+          className="w-full"
+          accept="video/*"
+          multiple
+          onChange={(e) => setVideoFiles(e.target.files)}
+        />
 
         <label>Packages</label>
         {packages.map((pkg, index) => (
@@ -139,7 +188,11 @@ export default function Dashboard() {
             }}
           />
         ))}
-        <button type="button" className="bg-gray-200 px-2 py-1 rounded" onClick={() => setPackages((prev) => [...prev, ''])}>
+        <button
+          type="button"
+          className="bg-gray-200 px-2 py-1 rounded"
+          onClick={() => setPackages((prev) => [...prev, ''])}
+        >
           + Add Another Package
         </button>
 
@@ -159,13 +212,30 @@ export default function Dashboard() {
                 />
 
                 <label>New Cover Image</label>
-                <input type="file" className="w-full" accept="image/*" onChange={(e) => setEditCoverFile(e.target.files[0])} />
+                <input
+                  type="file"
+                  className="w-full"
+                  accept="image/*"
+                  onChange={(e) => setEditCoverFile(e.target.files[0])}
+                />
 
                 <label>New Images</label>
-                <input type="file" className="w-full" accept="image/*" multiple onChange={(e) => setEditImages(e.target.files)} />
+                <input
+                  type="file"
+                  className="w-full"
+                  accept="image/*"
+                  multiple
+                  onChange={(e) => setEditImages(e.target.files)}
+                />
 
                 <label>New Videos</label>
-                <input type="file" className="w-full" accept="video/*" multiple onChange={(e) => setEditVideos(e.target.files)} />
+                <input
+                  type="file"
+                  className="w-full"
+                  accept="video/*"
+                  multiple
+                  onChange={(e) => setEditVideos(e.target.files)}
+                />
 
                 <label>Edit Packages</label>
                 {editPackages.map((pkg, index) => (
@@ -180,13 +250,21 @@ export default function Dashboard() {
                     }}
                   />
                 ))}
-                <button type="button" className="bg-gray-200 px-2 py-1 rounded" onClick={() => setEditPackages((prev) => [...prev, ''])}>
+                <button
+                  type="button"
+                  className="bg-gray-200 px-2 py-1 rounded"
+                  onClick={() => setEditPackages((prev) => [...prev, ''])}
+                >
                   + Add Another Package
                 </button>
 
                 <div className="flex space-x-2">
                   <button className="bg-blue-600 text-white px-3 py-1 rounded">Save</button>
-                  <button type="button" className="bg-gray-400 text-white px-3 py-1 rounded" onClick={() => setIsEditing(null)}>
+                  <button
+                    type="button"
+                    className="bg-gray-400 text-white px-3 py-1 rounded"
+                    onClick={() => setIsEditing(null)}
+                  >
                     Cancel
                   </button>
                 </div>
@@ -217,7 +295,10 @@ export default function Dashboard() {
                 <div className="grid grid-cols-1 gap-2 mb-2">
                   {c.video?.map((vidId) => (
                     <video key={vidId} className="w-full h-32 object-cover" controls>
-                      <source src={`https://res.cloudinary.com/${cloudName}/video/upload/${vidId}.mp4`} type="video/mp4" />
+                      <source
+                        src={`https://res.cloudinary.com/${cloudName}/video/upload/${vidId}.mp4`}
+                        type="video/mp4"
+                      />
                     </video>
                   ))}
                 </div>

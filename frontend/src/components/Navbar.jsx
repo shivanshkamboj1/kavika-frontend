@@ -19,8 +19,8 @@ const Navbar = () => {
       {/* Small screen call banner */}
       <div className="bg-[#132135] text-[#F2E9DC] text-center py-2 px-4 text-sm font-medium lg:hidden border-b border-[#ffb84c]/20">
         Call Us:{' '}
-        <a href="tel:+1234567890" className="underline hover:text-[#ffb84c] transition">
-          +1 (234) 567-890
+        <a href="tel:+919355580007" className="underline hover:text-[#ffb84c] transition">
+         Call Us: +91 9355580007
         </a>
       </div>
 
@@ -36,10 +36,10 @@ const Navbar = () => {
           <NavLink to="/destination" className={aClass}>Destinations</NavLink>
           <NavLink to="/about" className={aClass}>About</NavLink>
           <a
-            href="tel:+1234567890"
+            href="tel:+919355580007"
             className="bg-[#132135] text-[#ffb84c] px-4 py-2 rounded-full border border-[#ffb84c]/50 hover:bg-[#ffb84c]/10 transition"
           >
-            Call Us: +1 (234) 567-890
+            Call Us: +91 9355580007
           </a>
         </nav>
 
@@ -68,10 +68,10 @@ const Navbar = () => {
             <NavLink to="/destination" className="block text-[#F2E9DC] hover:text-[#ffb84c]">Destinations</NavLink>
             <NavLink to="/about" className="block text-[#F2E9DC] hover:text-[#ffb84c]">About</NavLink>
             <a
-              href="tel:+1234567890"
+              href="tel:+919355580007"
               className="inline-block bg-[#ffb84c] text-[#132135] font-medium py-2 px-4 rounded-full hover:bg-[#ffb84c]/80 transition"
             >
-              Call Us: +1 (234) 567-890
+              Call Us: +91 9355580007
             </a>
           </div>
         </div>

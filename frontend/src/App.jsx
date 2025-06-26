@@ -60,6 +60,7 @@ function App() {
             }
           />
         </Routes>
+        <Route path="*" element={<Navigate to="/" />} />
       </AnimatePresence>
       <Footer />
     </>
