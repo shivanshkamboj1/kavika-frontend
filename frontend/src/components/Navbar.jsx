@@ -20,7 +20,7 @@ const Navbar = () => {
       <div className="bg-[#132135] text-[#F2E9DC] text-center py-2 px-4 text-sm font-medium lg:hidden border-b border-[#ffb84c]/20">
         Call Us:{' '}
         <a href="tel:+919355580007" className="underline hover:text-[#ffb84c] transition">
-         Call Us: +91 9355580007
+         +91 9355580007
         </a>
       </div>
 
