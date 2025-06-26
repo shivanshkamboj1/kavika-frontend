@@ -1,11 +1,11 @@
 import React from 'react';
-import G1 from '../assets/Group-7.png';
-import G2 from '../assets/Group-11.png';
-import G3 from '../assets/Group-12.png';
+import G1 from '../assets/a1.png';
+import G2 from '../assets/a2.png';
+import G3 from '../assets/a3.png';
 
 const steps = [
   { id: 1, image: G1, text: 'Choose Your Favourite Destination' },
-  { id: 2, image: G2, text: 'Call Us at This Number' },
+  { id: 2, image: G2, text: 'Call Us at Our Number' },
   { id: 3, image: G3, text: 'Get Ready for Your Journey' },
 ];
 
