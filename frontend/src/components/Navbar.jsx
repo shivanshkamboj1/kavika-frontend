@@ -27,7 +27,7 @@ const Navbar = () => {
       {/* Main navbar */}
       <div className="max-w-screen-xl mx-auto flex justify-between items-center px-6 py-2">
         <Link to="/">
-          <img src="/images/image1.png" width="120" alt="Kavika Travels Logo" />
+          <img src="/images/image1.png" width="120" alt="Kavika Travels Logo" loading="eager"/>
         </Link>
 
         {/* Desktop links */}
