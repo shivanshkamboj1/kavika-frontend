@@ -12,13 +12,7 @@ import ScrollToTop from './scroll';
 
 function App() {
   const location = useLocation();
-  const [loading, setLoading] = useState(true);
 
-  // show loader for 1 second
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1000); // 1 second
-    return () => clearTimeout(timer);
-  }, []);
 
   const pageTransition = {
     initial: { opacity: 0, y: 20 },
@@ -26,16 +20,6 @@ function App() {
     exit: { opacity: 0, y: -20 },
     transition: { duration: 0.2 },
   };
-
-  if (loading) {
-    return (
-      <div className="flex h-screen w-screen items-center justify-center bg-[#0e1a2b]">
-        {/* Attractive loader */}
-        <div className="loader border-4 border-t-[#ffb84c] border-[#132135] rounded-full w-16 h-16 animate-spin"></div>
-      </div>
-    );
-  }
-
   return (
     <>
       <ScrollToTop />
