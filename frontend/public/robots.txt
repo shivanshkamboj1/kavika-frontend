@@ -1,0 +1,7 @@
+# Allow all search engines to access all pages
+User-agent: *
+Allow: /
+
+# Link to your sitemap
+
+Sitemap: https://www.kavikatravels.in/sitemap.xml

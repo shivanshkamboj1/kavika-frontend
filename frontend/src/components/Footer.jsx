@@ -11,7 +11,7 @@ const Footer = () => (
     <div className="text-white/70 text-sm space-y-1 mb-4">
       <p><strong>Name:</strong> Prince</p>
       <p><strong>Phone:</strong> +91 9355580007</p>
-      <p><strong>Email:</strong> contact@kavikatravels.com</p>
+      <p><strong>Email:</strong> contact@kavikatravels.in</p>
     </div>
 
     {/* Facebook Link */}
