@@ -134,6 +134,7 @@ const Destinations = ({ contents: passedContents }) => {
         Explore Our Destinations
       </h2>
 
+      {/* 🎡 Destination cards */}
       <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {contents.map((ele) => (
           <div
@@ -146,12 +147,41 @@ const Destinations = ({ contents: passedContents }) => {
               alt={ele.name}
               className="w-full h-64 object-cover rounded-2xl shadow-lg"
             />
-            <h1 className="mt-4 text-center text-xl font-bold text-[#F2E9DC]">{ele.name}</h1>
+            <h1 className="mt-4 text-center text-xl font-bold text-[#F2E9DC]">
+              {ele.name}
+            </h1>
           </div>
         ))}
       </div>
+
+      {/* 📦 Packages list */}
+      <div className="mt-12">
+        <h3 className="text-2xl font-semibold text-[#ffb84c] mb-6 text-center">
+          Available Packages
+        </h3>
+        <div className="space-y-8">
+          {contents
+            .filter((dest) => dest.packages && dest.packages.length > 0)
+            .map((dest) => (
+              <div
+                key={dest._id}
+                className="bg-[#132435] p-4 rounded-xl border border-[#ffb84c]/50 shadow-md"
+              >
+                <h4 className="text-xl font-medium text-[#F2E9DC] mb-2">
+                  {dest.name}
+                </h4>
+                <ul className="list-disc list-inside text-[#F2E9DC] space-y-1">
+                  {dest.packages.map((pkg, index) => (
+                    <li key={index}>{pkg}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+        </div>
+      </div>
     </motion.div>
   );
+
 };
 
 export default Destinations;
