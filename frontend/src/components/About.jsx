@@ -28,7 +28,7 @@ const AboutUs = () => {
     <>
       {/* SEO meta tags */}
       <Helmet>
-        <title>About Us | Kavika Travels</title>
+        {/* <title>About Us | Kavika Travels</title> */}
         <meta
           name="description"
           content="Discover Kavika Travels — a trusted tour and travel agency specializing in Karnal, Kurukshetra, Radaur, Indri, Ladwa & nearby cities. Book customized trips to Himachal, Chandigarh & Shimla with KavikaTravels."
