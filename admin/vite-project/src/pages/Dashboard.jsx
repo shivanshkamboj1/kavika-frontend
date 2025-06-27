@@ -186,18 +186,31 @@ export default function Dashboard() {
 
         <label>Packages</label>
         {packages.map((pkg, index) => (
-          <input
-            key={index}
-            className="w-full border p-2 mb-1"
-            placeholder="e.g. 3 nights 2 days 5000rs"
-            value={pkg}
-            onChange={(e) => {
-              const newPackages = [...packages];
-              newPackages[index] = e.target.value;
-              setPackages(newPackages);
-            }}
-          />
+          <div key={index} className="flex items-center mb-1 space-x-2">
+            <input
+              className="flex-1 border p-2"
+              placeholder="e.g. 3 nights 2 days 5000rs"
+              value={pkg}
+              onChange={(e) => {
+                const newPackages = [...packages];
+                newPackages[index] = e.target.value;
+                setPackages(newPackages);
+              }}
+            />
+            <button
+              type="button"
+              className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+              onClick={() => {
+                const newPackages = [...packages];
+                newPackages.splice(index, 1);
+                setPackages(newPackages.length ? newPackages : ['']);
+              }}
+            >
+              ✖
+            </button>
+          </div>
         ))}
+
         <button
           type="button"
           className="bg-gray-200 px-2 py-1 rounded"
@@ -249,17 +262,30 @@ export default function Dashboard() {
 
                 <label>Edit Packages</label>
                 {editPackages.map((pkg, index) => (
-                  <input
-                    key={index}
-                    className="w-full border p-2 mb-1"
-                    value={pkg}
-                    onChange={(e) => {
-                      const newPackages = [...editPackages];
-                      newPackages[index] = e.target.value;
-                      setEditPackages(newPackages);
-                    }}
-                  />
+                  <div key={index} className="flex items-center mb-1 space-x-2">
+                    <input
+                      className="flex-1 border p-2"
+                      value={pkg}
+                      onChange={(e) => {
+                        const newPackages = [...editPackages];
+                        newPackages[index] = e.target.value;
+                        setEditPackages(newPackages);
+                      }}
+                    />
+                    <button
+                      type="button"
+                      className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                      onClick={() => {
+                        const newPackages = [...editPackages];
+                        newPackages.splice(index, 1);
+                        setEditPackages(newPackages.length ? newPackages : ['']);
+                      }}
+                    >
+                      ✖
+                    </button>
+                  </div>
                 ))}
+
                 <button
                   type="button"
                   className="bg-gray-200 px-2 py-1 rounded"
