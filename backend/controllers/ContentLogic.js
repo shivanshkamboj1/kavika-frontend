@@ -84,59 +84,71 @@ exports.deleteContent = async (req, res) => {
 // PUT /contents/:id
 exports.updateContent = async (req, res) => {
   try {
-    const { id } = req.params
-    const { name,packages, removeImageIds = [], removeVideoIds = [] } = req.body
+    const { id } = req.params;
+    let { name, packages, removeImageIds = [], removeVideoIds = [] } = req.body;
 
-    let content = await Content.findById(id)
-    if (!content) return res.status(404).json({ message: 'Content not found!' })
+    // Ensure removeImageIds and removeVideoIds are arrays
+    let imageIds = removeImageIds;
+    let videoIds = removeVideoIds;
+
+    if (typeof imageIds === 'string') imageIds = [imageIds];
+    if (typeof videoIds === 'string') videoIds = [videoIds];
+
+    let content = await Content.findById(id);
+    if (!content) return res.status(404).json({ message: 'Content not found!' });
 
     // Update name
-    if (name) content.name = name
+    if (name) content.name = name;
     if (packages) {
-      content.packages = Array.isArray(packages) ? packages : [packages]
+      content.packages = Array.isArray(packages) ? packages : [packages];
     }
+
     // Replace cover image
     if (req.files?.coverImage?.[0]) {
-      await cloudinary.uploader.destroy(content.coverImage, { resource_type: 'image' })
-      content.coverImage = await uploadFile(req.files.coverImage[0].path, 'image')
+      await cloudinary.uploader.destroy(content.coverImage, { resource_type: 'image' });
+      content.coverImage = await uploadFile(req.files.coverImage[0].path, 'image');
     }
 
     // Append new images
     if (req.files?.images) {
       const newImages = await Promise.all(
         req.files.images.map((img) => uploadFile(img.path, 'image'))
-      )
-      content.image.push(...newImages)
+      );
+      content.image.push(...newImages);
     }
 
     // Append new videos
     if (req.files?.videos) {
       const newVideos = await Promise.all(
         req.files.videos.map((vid) => uploadFile(vid.path, 'video'))
-      )
-      content.video.push(...newVideos)
+      );
+      content.video.push(...newVideos);
     }
 
     // Remove specified imageIds
-    if (removeImageIds.length) {
-      content.image = content.image.filter((imgId) => !removeImageIds.includes(imgId))
+    if (imageIds.length) {
+      content.image = content.image.filter((imgId) => !imageIds.includes(imgId));
       await Promise.all(
-        removeImageIds.map((imgId) => cloudinary.uploader.destroy(imgId, { resource_type: 'image' }))
-      )
+        imageIds.map((imgId) =>
+          cloudinary.uploader.destroy(imgId, { resource_type: 'image' })
+        )
+      );
     }
 
     // Remove specified videoIds
-    if (removeVideoIds.length) {
-      content.video = content.video.filter((vidId) => !removeVideoIds.includes(vidId))
+    if (videoIds.length) {
+      content.video = content.video.filter((vidId) => !videoIds.includes(vidId));
       await Promise.all(
-        removeVideoIds.map((vidId) => cloudinary.uploader.destroy(vidId, { resource_type: 'video' }))
-      )
+        videoIds.map((vidId) =>
+          cloudinary.uploader.destroy(vidId, { resource_type: 'video' })
+        )
+      );
     }
 
-    await content.save()
-    return res.status(200).json({ message: 'Content updated successfully!', content })
+    await content.save();
+    return res.status(200).json({ message: 'Content updated successfully!', content });
   } catch (error) {
-    console.error(error)
-    return res.status(500).json({ message: 'Server error', error: error.message })
+    console.error(error);
+    return res.status(500).json({ message: 'Server error', error: error.message });
   }
-}
+};
