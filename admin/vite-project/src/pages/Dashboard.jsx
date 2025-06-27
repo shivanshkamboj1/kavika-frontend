@@ -20,6 +20,10 @@ export default function Dashboard() {
   const [editVideos, setEditVideos] = useState([]);
   const [editPackages, setEditPackages] = useState([]);
 
+  // New states for marking removals
+  const [removeImageIds, setRemoveImageIds] = useState([]);
+  const [removeVideoIds, setRemoveVideoIds] = useState([]);
+
   useEffect(() => {
     reloadContents();
   }, [apiUrl]);
@@ -49,7 +53,7 @@ export default function Dashboard() {
         credentials: 'include',
       });
 
-      toast.dismiss(toastId); // hide loader
+      toast.dismiss(toastId);
 
       if (res.ok) {
         toast.success('Content uploaded successfully!');
@@ -77,7 +81,7 @@ export default function Dashboard() {
         credentials: 'include',
       });
 
-      toast.dismiss(toastId); // hide loader
+      toast.dismiss(toastId);
       if (res.ok) {
         toast.success('Deleted successfully');
         reloadContents();
@@ -94,6 +98,8 @@ export default function Dashboard() {
     setEditImages([]);
     setEditVideos([]);
     setEditPackages(content.packages || []);
+    setRemoveImageIds([]);
+    setRemoveVideoIds([]);
   };
 
   const handleUpdate = async (e) => {
@@ -107,6 +113,8 @@ export default function Dashboard() {
       Array.from(editImages).forEach((img) => formData.append('images', img));
       Array.from(editVideos).forEach((vid) => formData.append('videos', vid));
       Array.from(editPackages).forEach((pkg) => formData.append('packages', pkg));
+      removeImageIds.forEach((id) => formData.append('removeImageIds', id));
+      removeVideoIds.forEach((id) => formData.append('removeVideoIds', id));
 
       const res = await fetch(`${apiUrl}/contents/${isEditing}`, {
         method: 'PUT',
@@ -114,7 +122,7 @@ export default function Dashboard() {
         credentials: 'include',
       });
 
-      toast.dismiss(toastId); // hide loader
+      toast.dismiss(toastId);
 
       if (res.ok) {
         toast.success('Updated successfully!');
@@ -124,6 +132,8 @@ export default function Dashboard() {
         setEditImages([]);
         setEditVideos([]);
         setEditPackages([]);
+        setRemoveImageIds([]);
+        setRemoveVideoIds([]);
         reloadContents();
       } else {
         toast.error('Error updating content.');
@@ -257,6 +267,72 @@ export default function Dashboard() {
                 >
                   + Add Another Package
                 </button>
+
+                {c.image?.length > 0 && (
+                  <div>
+                    <label className="block font-semibold">Existing Images</label>
+                    <div className="grid grid-cols-2 gap-2">
+                      {c.image.map((imgId) => (
+                        <div key={imgId} className="relative">
+                          <img
+                            src={`https://res.cloudinary.com/${cloudName}/image/upload/${imgId}.jpg`}
+                            className="w-full h-32 object-cover rounded"
+                            alt="existing"
+                          />
+                          <label className="flex items-center mt-1 text-sm">
+                            <input
+                              type="checkbox"
+                              checked={removeImageIds.includes(imgId)}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setRemoveImageIds((prev) => [...prev, imgId]);
+                                } else {
+                                  setRemoveImageIds((prev) => prev.filter((id) => id !== imgId));
+                                }
+                              }}
+                            />
+                            <span className="ml-2">Remove</span>
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {c.video?.length > 0 && (
+                  <div>
+                    <label className="block font-semibold">Existing Videos</label>
+                    <div className="grid grid-cols-1 gap-2">
+                      {c.video.map((vidId) => (
+                        <div key={vidId} className="relative">
+                          <video
+                            className="w-full h-32 object-cover rounded"
+                            controls
+                          >
+                            <source
+                              src={`https://res.cloudinary.com/${cloudName}/video/upload/${vidId}.mp4`}
+                              type="video/mp4"
+                            />
+                          </video>
+                          <label className="flex items-center mt-1 text-sm">
+                            <input
+                              type="checkbox"
+                              checked={removeVideoIds.includes(vidId)}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  setRemoveVideoIds((prev) => [...prev, vidId]);
+                                } else {
+                                  setRemoveVideoIds((prev) => prev.filter((id) => id !== vidId));
+                                }
+                              }}
+                            />
+                            <span className="ml-2">Remove</span>
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <div className="flex space-x-2">
                   <button className="bg-blue-600 text-white px-3 py-1 rounded">Save</button>
