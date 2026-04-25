@@ -11,33 +11,33 @@ const Navbar = () => {
   
   const aClass = ({ isActive }) =>
     isActive
-      ? 'block text-[#ffb84c] border-b-2 border-[#ffb84c] transition-colors'
-      : 'block text-[#F2E9DC] hover:text-[#ffb84c] transition-colors';
+      ? 'block text-sky-600 border-b-2 border-sky-500 transition-colors font-semibold'
+      : 'block text-slate-700 hover:text-sky-600 transition-colors font-medium';
 
   return (
-    <header className="bg-[#0e1a2b]/80 sticky top-0 left-0 w-full z-50 backdrop-blur-md border-b border-[#ffb84c]/20">
+    <header className="bg-white/90 sticky top-0 left-0 w-full z-50 backdrop-blur-lg border-b border-gray-200 shadow-sm transition-all duration-300">
       {/* Small screen call banner */}
-      <div className="bg-[#132135] text-[#F2E9DC] text-center py-2 px-4 text-sm font-medium lg:hidden border-b border-[#ffb84c]/20">
-        Call Us:{' '}
-        <a href="tel:+919355580007" className="underline hover:text-[#ffb84c] transition">
+      <div className="bg-sky-600 text-white text-center py-2 px-4 text-sm font-medium lg:hidden">
+        Need Help? Call Us:{' '}
+        <a href="tel:+919355580007" className="underline hover:text-sky-100 transition font-bold">
          +91 9355580007
         </a>
       </div>
 
       {/* Main navbar */}
-      <div className="max-w-screen-xl mx-auto flex justify-between items-center px-6 py-2">
-        <Link to="/">
-          <img src="/images/image1.png" width="120" alt="Kavika Travels Logo" loading="eager"/>
+      <div className="max-w-screen-xl mx-auto flex justify-between items-center px-6 py-3">
+        <Link to="/" className="flex-shrink-0">
+          <img src="/images/image1.png" width="120" alt="Kavika Travels Logo" loading="eager" className="hover:opacity-90 transition"/>
         </Link>
 
         {/* Desktop links */}
-        <nav className="hidden lg:flex space-x-8 text-lg font-medium items-center">
+        <nav className="hidden lg:flex space-x-10 text-base items-center">
           <NavLink to="/" className={aClass}>Home</NavLink>
           <NavLink to="/destination" className={aClass}>Destinations</NavLink>
           <NavLink to="/about" className={aClass}>About</NavLink>
           <a
             href="tel:+919355580007"
-            className="bg-[#132135] text-[#ffb84c] px-4 py-2 rounded-full border border-[#ffb84c]/50 hover:bg-[#ffb84c]/10 transition"
+            className="bg-orange-500 text-white px-6 py-2.5 rounded-full font-semibold shadow-md hover:bg-orange-600 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
           >
             Call Us: +91 9355580007
           </a>
@@ -45,8 +45,9 @@ const Navbar = () => {
 
         {/* Mobile menu button */}
         <button
-          className="lg:hidden text-[#F2E9DC] focus:outline-none"
+          className="lg:hidden text-slate-800 p-2 focus:outline-none hover:bg-slate-100 rounded-full transition"
           onClick={handleMenuToggle}
+          aria-label="Toggle Menu"
         >
           {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
         </button>
@@ -54,25 +55,37 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`lg:hidden fixed top-0 left-0 w-full h-[1080px] z-[9999]backdrop-blur-sm z-40 transition-transform duration-300 ${
-          menuOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`lg:hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 transition-opacity duration-300 ${
+          menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
         }`}
         onClick={handleMenuToggle}
       >
         <div
-          className="bg-[#132135] w-3/4 h-full p-6 shadow-xl border-r border-[#ffb84c]/20"
+          className={`bg-white w-4/5 max-w-sm h-full p-6 shadow-2xl transition-transform duration-300 ease-out flex flex-col ${
+            menuOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="space-y-6 text-lg" onClick={() => setMenuOpen(!menuOpen)}>
-            <NavLink to="/" className="block text-[#F2E9DC] hover:text-[#ffb84c]">Home</NavLink>
-            <NavLink to="/destination" className="block text-[#F2E9DC] hover:text-[#ffb84c]">Destinations</NavLink>
-            <NavLink to="/about" className="block text-[#F2E9DC] hover:text-[#ffb84c]">About</NavLink>
-            <a
-              href="tel:+919355580007"
-              className="inline-block bg-[#ffb84c] text-[#132135] font-medium py-2 px-4 rounded-full hover:bg-[#ffb84c]/80 transition"
-            >
-              Call Us: +91 9355580007
-            </a>
+          <div className="flex justify-between items-center mb-8">
+            <img src="/images/image1.png" width="100" alt="Kavika Travels Logo" />
+            <button onClick={handleMenuToggle} className="text-slate-500 hover:text-slate-800 p-2 rounded-full hover:bg-slate-100">
+              <FaTimes size={24} />
+            </button>
+          </div>
+          
+          <div className="flex flex-col space-y-6 text-lg" onClick={() => setMenuOpen(!menuOpen)}>
+            <NavLink to="/" className={({ isActive }) => isActive ? 'text-sky-600 font-bold' : 'text-slate-700 hover:text-sky-600 font-medium'}>Home</NavLink>
+            <NavLink to="/destination" className={({ isActive }) => isActive ? 'text-sky-600 font-bold' : 'text-slate-700 hover:text-sky-600 font-medium'}>Destinations</NavLink>
+            <NavLink to="/about" className={({ isActive }) => isActive ? 'text-sky-600 font-bold' : 'text-slate-700 hover:text-sky-600 font-medium'}>About</NavLink>
+            
+            <div className="pt-6 border-t border-gray-100 mt-auto">
+              <a
+                href="tel:+919355580007"
+                className="flex items-center justify-center w-full bg-orange-500 text-white font-semibold py-3 px-4 rounded-xl shadow-md hover:bg-orange-600 transition"
+              >
+                Call Us: +91 9355580007
+              </a>
+            </div>
           </div>
         </div>
       </div>

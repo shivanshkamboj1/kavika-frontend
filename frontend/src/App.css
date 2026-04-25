@@ -2,17 +2,25 @@
 @import 'slick-carousel/slick/slick.css';
 @import 'slick-carousel/slick/slick-theme.css';
 
-*{
-    font-family: "Poppins", sans-serif;
-    scroll-behavior: smooth;
+:root {
+  --color-primary: #0ea5e9; /* Sky Blue */
+  --color-accent: #f97316; /* Sunset Orange */
+  --color-bg: #f8fafc; /* Slate 50 */
+  --color-text: #0f172a; /* Slate 900 */
+  --color-text-light: #475569; /* Slate 600 */
 }
-html, body, #root {
-  min-height: 100%;
-  background: #0e1a2b; /* dark navy background */
-  color: #F2E9DC;        /* light text */
+
+* {
   font-family: "Poppins", sans-serif;
   scroll-behavior: smooth;
 }
+
+html, body, #root {
+  min-height: 100%;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);

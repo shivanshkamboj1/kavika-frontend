@@ -8,10 +8,13 @@ const testimonials = [
 
 const Testimonial = () => {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-[#0e1a2b] text-white">
+    <section className="relative py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 overflow-hidden">
+      {/* Decorative Blob */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] bg-gradient-to-r from-sky-200/50 to-orange-200/50 rounded-full blur-[150px] -z-10 mix-blend-multiply pointer-events-none"></div>
+
       {/* Heading */}
-      <h2 className="text-4xl font-bold text-center text-[#ffb84c] mb-12 drop-shadow-md">
-        What Our Customers Say
+      <h2 className="text-4xl sm:text-5xl font-extrabold text-center text-slate-900 tracking-tight mb-20 drop-shadow-sm">
+        What Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-rose-500">Customers Say</span>
       </h2>
 
       {/* Testimonials Grid */}
@@ -19,22 +22,26 @@ const Testimonial = () => {
         {testimonials.map((item, index) => (
           <div
             key={index}
-            className="bg-white/5 backdrop-blur-xl p-6 rounded-xl shadow-2xl text-center transform hover:scale-105 transition border border-[#ffb84c]/20"
+            className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-white/60 text-center transform hover:-translate-y-3 hover:shadow-2xl transition-all duration-300 relative mt-10 group"
           >
             {/* User image */}
-            <img
-              src={item.image}
-              alt={item.name}
-              className="w-20 h-20 rounded-full mx-auto mb-4 border-2 border-[#ffb84c]"
-            />
+            <div className="absolute -top-12 left-1/2 transform -translate-x-1/2">
+              <div className="w-24 h-24 rounded-full p-1 bg-gradient-to-tr from-orange-400 to-rose-500 shadow-xl group-hover:scale-110 transition-transform duration-300">
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-full rounded-full border-4 border-white object-cover"
+                />
+              </div>
+            </div>
 
             {/* Name */}
-            <h3 className="text-xl font-semibold mb-2 text-[#ffb84c]">
+            <h3 className="text-xl font-bold mb-3 text-slate-900 mt-6">
               {item.name}
             </h3>
 
             {/* Feedback */}
-            <p className="text-white/90 italic">&ldquo;{item.feedback}&rdquo;</p>
+            <p className="text-slate-600 italic font-medium">&ldquo;{item.feedback}&rdquo;</p>
           </div>
         ))}
       </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { motion } from 'framer-motion';
 import Logo from '/images/image1.png';
 
 const AboutUs = () => {
@@ -37,43 +38,61 @@ const AboutUs = () => {
       </Helmet>
 
       {/* Main Content */}
-      <section className="bg-[#0e1a2b] py-20 px-6 md:px-20 lg:px-32 text-white min-h-screen">
-        <div className="max-w-5xl mx-auto bg-[#132135] border border-[#ffb84c]/40 rounded-2xl p-10 shadow-2xl space-y-16">
+      <section className="relative bg-slate-50 py-20 px-6 md:px-20 lg:px-32 text-slate-800 min-h-screen overflow-hidden">
+        {/* Colorful Background Blobs */}
+        <div className="absolute top-0 right-0 w-[40vw] h-[40vw] bg-rose-300/30 rounded-full blur-[120px] -z-10 mix-blend-multiply pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[50vw] h-[50vw] bg-sky-300/30 rounded-full blur-[120px] -z-10 mix-blend-multiply pointer-events-none"></div>
+
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{
+            hidden: { opacity: 0 },
+            visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
+          }}
+          className="relative z-10 max-w-5xl mx-auto bg-white/80 backdrop-blur-2xl border border-white/50 rounded-3xl p-10 sm:p-16 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-16"
+        >
 
           {/* Main heading */}
-          <h1 className="text-5xl font-extrabold text-center text-[#ffb84c] drop-shadow-md">
-            About Us
-          </h1>
+          <motion.h1 
+            variants={{ hidden: { opacity: 0, y: -20 }, visible: { opacity: 1, y: 0 } }}
+            className="text-4xl sm:text-6xl font-extrabold text-center text-slate-900 tracking-tight drop-shadow-sm"
+          >
+            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-indigo-600">Us</span>
+          </motion.h1>
 
           {/* Our Story */}
-          <div className="space-y-6">
-            <h2 className="text-2xl font-semibold text-[#ffb84c]">Our Story</h2>
-            <p className="text-lg leading-relaxed text-white/90">
+          <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="space-y-6">
+            <h2 className="text-3xl font-bold text-slate-900">Our Story</h2>
+            <p className="text-lg leading-relaxed text-slate-600">
               Kavika Travels was founded by explorers who believe travel is more than just sightseeing — it’s about connection, culture, and discovery. From humble beginnings to becoming a trusted travel partner across North India, our journey has been incredible.
             </p>
-          </div>
+          </motion.div>
 
           {/* Why Choose Us */}
-          <div className="space-y-6">
-            <h2 className="text-2xl font-semibold text-[#ffb84c]">Why Choose Us?</h2>
-            <ul className="list-disc list-inside space-y-3 text-white/90 marker:text-[#ffb84c] text-lg pl-2">
-              <li>🌍 Curated tours in over 50 incredible destinations including Shimla, Chandigarh, Kurukshetra, Karnal, and more</li>
-              <li>🧭 Friendly local guides for authentic, immersive experiences</li>
-              <li>🛡️ End-to-end travel planning with 24/7 support and flexible options</li>
-              <li>💬 Loved by 10,000+ travelers — 4.9/5 average rating on Google</li>
+          <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="space-y-6">
+            <h2 className="text-3xl font-bold text-slate-900 flex items-center gap-3">
+              <span className="w-10 h-1 bg-gradient-to-r from-orange-400 to-rose-400 rounded-full"></span> Why Choose Us?
+            </h2>
+            <ul className="list-none space-y-4 text-slate-600 text-lg">
+              <li className="flex items-center gap-3"><span className="text-2xl">🌍</span> Curated tours in over 50 incredible destinations</li>
+              <li className="flex items-center gap-3"><span className="text-2xl">🧭</span> Friendly local guides for authentic experiences</li>
+              <li className="flex items-center gap-3"><span className="text-2xl">🛡️</span> End-to-end travel planning with 24/7 support</li>
+              <li className="flex items-center gap-3"><span className="text-2xl">💬</span> Loved by 10,000+ travelers — 4.9/5 on Google</li>
             </ul>
-          </div>
+          </motion.div>
 
           {/* Contact Details */}
-          <div className="pt-10 border-t border-[#ffb84c]/40 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="space-y-3 text-xl text-white/90">
-              <p><span className="font-semibold text-[#ffb84c]">Contact:</span> Prince</p>
-              <p><span className="font-semibold text-[#ffb84c]">Address:</span> Plot Number - C6783, Near Deep Chand Bandhu Hospital, Ashok Vihar, Delhi 110052</p>
-              <p><span className="font-semibold text-[#ffb84c]">Mobile:</span> <a href="tel:+919355580007" className="hover:underline">+91 9355580007</a></p>
-              <p><span className="font-semibold text-[#ffb84c]">Available:</span> All days, 9 AM – 9 PM</p>
-              <p className=' opacity-0'>
-                <a href="/destination" className="text-[#ffb84c] underline">Browse Destinations</a> |{" "}
-                <a href="/contact" className="text-[#ffb84c] underline">Contact Us</a>
+          <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="pt-10 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div className="space-y-4 text-lg text-slate-700">
+              <p><span className="font-bold text-sky-600">Contact:</span> Prince</p>
+              <p><span className="font-bold text-sky-600">Address:</span> Plot Number - C6783, Near Deep Chand Bandhu Hospital, Ashok Vihar, Delhi 110052</p>
+              <p><span className="font-bold text-sky-600">Mobile:</span> <a href="tel:+919355580007" className="hover:text-orange-500 transition font-semibold">+91 9355580007</a></p>
+              <p><span className="font-bold text-sky-600">Available:</span> All days, 9 AM – 9 PM</p>
+              <p className='opacity-0'>
+                <a href="/destination" className="text-sky-600 underline">Browse Destinations</a> |{" "}
+                <a href="/contact" className="text-sky-600 underline">Contact Us</a>
               </p>
             </div>
             <img
@@ -82,8 +101,8 @@ const AboutUs = () => {
               className="h-28 w-auto drop-shadow-xl"
               loading="lazy"
             />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
     </>
   );

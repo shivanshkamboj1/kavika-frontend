@@ -2,9 +2,9 @@ import React from 'react';
 import { FaFacebook } from 'react-icons/fa';
 
 const Footer = () => (
-  <footer className="bg-slate-900 text-white text-center py-8 border-t border-white/10 mt-16">
-    <p className="text-white/70 text-sm mb-2">
-      © {new Date().getFullYear()} Kavika Travels — Crafted with 💛.
+  <footer className="bg-slate-900 text-white text-center py-10 mt-16 shadow-inner">
+    <p className="text-sky-200 text-sm mb-4 font-medium">
+      © {new Date().getFullYear()} Kavika Travels — Crafted with 🩵.
     </p>
 
     {/* Contact Information */}
@@ -19,9 +19,9 @@ const Footer = () => (
       href="https://facebook.com/kavikatravels"
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-2 text-white/70 hover:text-white transition-colors"
+      className="inline-flex items-center gap-2 text-sky-200 hover:text-white transition-colors mt-2"
     >
-      <FaFacebook size={20} /> Facebook
+      <FaFacebook size={24} /> Facebook
     </a>
   </footer>
 );

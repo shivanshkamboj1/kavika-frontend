@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
+import { motion } from 'framer-motion';
+import Hero from './Hero';
 import Bookus from './Bookus';
 import DestinationSlider from './DestinationSlider';
 import Destinations from './Destinations';
@@ -27,14 +29,19 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="flex h-screen w-screen items-center justify-center bg-[#0e1a2b]">
-        <div className="w-16 h-16 border-4 border-t-[#ffb84c] border-[#132135] rounded-full animate-spin"></div>
+      <div className="flex h-screen w-screen items-center justify-center bg-slate-50">
+        <div className="w-16 h-16 border-4 border-t-sky-500 border-sky-200 rounded-full animate-spin shadow-sm"></div>
       </div>
     );
   }
 
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+  };
+
   return (
-    <>
+    <div className="overflow-x-hidden">
       {/* SEO META */}
       <Helmet>
         <title>
@@ -50,14 +57,32 @@ const Home = () => {
         />
       </Helmet>
 
-      {/* Existing page sections */}
-      <DestinationSlider contents={contents} loading={loading} />
-      <ResponsiveVideoPlayer />
-      <Bookus />
-      <Destinations contents={contents} />
-      <About />
-      <Testimonial />
-    </>
+      <Hero />
+      
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeInUp}>
+        <DestinationSlider contents={contents} loading={loading} />
+      </motion.div>
+      
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp}>
+        <ResponsiveVideoPlayer />
+      </motion.div>
+      
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp}>
+        <Bookus />
+      </motion.div>
+      
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeInUp}>
+        <Destinations contents={contents} />
+      </motion.div>
+      
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp}>
+        <About />
+      </motion.div>
+      
+      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp}>
+        <Testimonial />
+      </motion.div>
+    </div>
   );
 };
 
