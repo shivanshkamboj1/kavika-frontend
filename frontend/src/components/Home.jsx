@@ -41,7 +41,7 @@ const Home = () => {
   };
 
   return (
-    <div className="overflow-x-hidden">
+    <main>
       {/* SEO META */}
       <Helmet>
         <title>
@@ -82,7 +82,7 @@ const Home = () => {
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp}>
         <Testimonial />
       </motion.div>
-    </div>
+    </main>
   );
 };
 

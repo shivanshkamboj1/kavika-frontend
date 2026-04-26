@@ -15,8 +15,7 @@
   scroll-behavior: smooth;
 }
 
-html, body, #root {
-  min-height: 100%;
+body {
   background-color: var(--color-bg);
   color: var(--color-text);
 }

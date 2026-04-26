@@ -63,8 +63,8 @@ const DestinationSlider = ({ contents, loading }) => {
         Explore Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 to-indigo-600">Top Destinations</span>
       </h2>
 
-      <div className="relative max-w-screen-xl mx-auto px-4 overflow-visible">
-        <Slider {...settings} className="overflow-visible">
+      <div className="relative max-w-screen-xl mx-auto px-4">
+        <Slider {...settings}>
           {contents.map((ele) => {
             const firstPackage = ele.packages && ele.packages.length > 0 ? ele.packages[0] : null;
             return (
