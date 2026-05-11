@@ -5,91 +5,107 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleMenuToggle = () => {
-    setMenuOpen(!menuOpen);
-  };
-  
-  const aClass = ({ isActive }) =>
-    isActive
-      ? 'block text-sky-600 border-b-2 border-sky-500 transition-colors font-semibold'
-      : 'block text-slate-700 hover:text-sky-600 transition-colors font-medium';
+  const linkClass = ({ isActive }) =>
+    `hover:text-primary transition-colors ${isActive ? 'text-primary' : ''}`;
 
   return (
-    <header className="bg-white/90 sticky top-0 left-0 w-full z-50 backdrop-blur-lg border-b border-gray-200 shadow-sm transition-all duration-300">
-      {/* Small screen call banner */}
-      <div className="bg-sky-600 text-white text-center py-2 px-4 text-sm font-medium lg:hidden">
-        Need Help? Call Us:{' '}
-        <a href="tel:+919355580007" className="underline hover:text-sky-100 transition font-bold">
-         +91 9355580007
-        </a>
-      </div>
-
-      {/* Main navbar */}
-      <div className="max-w-screen-xl mx-auto flex justify-between items-center px-6 py-3">
-        <Link to="/" className="flex-shrink-0">
-          <img src="/images/image1.png" width="120" alt="Kavika Travels Logo" loading="eager" className="hover:opacity-90 transition"/>
+    <nav className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-border">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 py-4 flex justify-between items-center">
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-2">
+          <span className="font-display text-2xl font-bold italic tracking-tight text-primary">Kavika</span>
+          <span className="text-[10px] font-mono uppercase tracking-widest bg-accent/20 text-foreground px-1.5 py-0.5 rounded">Travels</span>
         </Link>
 
-        {/* Desktop links */}
-        <nav className="hidden lg:flex space-x-10 text-base items-center">
-          <NavLink to="/" className={aClass}>Home</NavLink>
-          <NavLink to="/destination" className={aClass}>Destinations</NavLink>
-          <NavLink to="/about" className={aClass}>About</NavLink>
+        {/* Desktop Navigation */}
+        <div className="hidden lg:flex items-center gap-8 text-sm font-medium uppercase tracking-widest">
+          <NavLink to="/destination" className={linkClass}>Destinations</NavLink>
+          <NavLink to="/about" className={linkClass}>About</NavLink>
+          <NavLink to="/contact" className={linkClass}>Contact</NavLink>
           <a
             href="tel:+919355580007"
-            className="bg-orange-500 text-white px-6 py-2.5 rounded-full font-semibold shadow-md hover:bg-orange-600 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 flex items-center gap-2"
+            className="bg-primary text-primary-foreground px-5 py-2.5 rounded-full hover:bg-primary/90 transition-transform active:scale-95 text-xs font-bold"
           >
-            Call Us: +91 9355580007
+            Call: +91 9355580007
           </a>
-        </nav>
+        </div>
 
-        {/* Mobile menu button */}
-        <button
-          className="lg:hidden text-slate-800 p-2 focus:outline-none hover:bg-slate-100 rounded-full transition"
-          onClick={handleMenuToggle}
-          aria-label="Toggle Menu"
-        >
-          {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
-        </button>
+        {/* Mobile CTA + Hamburger */}
+        <div className="flex items-center gap-3 lg:hidden">
+          <a
+            href="tel:+919355580007"
+            className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-xs font-medium uppercase tracking-widest"
+          >
+            Call Us
+          </a>
+          <button
+            className="text-foreground p-2 hover:bg-muted rounded-full transition"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle Menu"
+          >
+            {menuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Overlay */}
       <div
-        className={`lg:hidden fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-40 transition-opacity duration-300 ${
+        className={`lg:hidden fixed inset-0 bg-ink/40 backdrop-blur-sm z-40 transition-opacity duration-300 ${
           menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
         }`}
-        onClick={handleMenuToggle}
+        onClick={() => setMenuOpen(false)}
       >
         <div
-          className={`bg-white w-4/5 max-w-sm h-full p-6 shadow-2xl transition-transform duration-300 ease-out flex flex-col ${
+          className={`bg-card w-4/5 max-w-sm h-full p-8 shadow-2xl transition-transform duration-300 ease-out flex flex-col ${
             menuOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex justify-between items-center mb-8">
-            <img src="/images/image1.png" width="100" alt="Kavika Travels Logo" />
-            <button onClick={handleMenuToggle} className="text-slate-500 hover:text-slate-800 p-2 rounded-full hover:bg-slate-100">
-              <FaTimes size={24} />
+          {/* Drawer Header */}
+          <div className="flex justify-between items-center mb-10">
+            <Link to="/" className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
+              <span className="font-display text-xl font-bold italic text-primary">Kavika</span>
+              <span className="text-[9px] font-mono uppercase tracking-widest bg-accent/20 px-1.5 py-0.5 rounded">Travels</span>
+            </Link>
+            <button onClick={() => setMenuOpen(false)} className="text-muted-foreground hover:text-foreground p-2 rounded-full hover:bg-muted">
+              <FaTimes size={22} />
             </button>
           </div>
-          
-          <div className="flex flex-col space-y-6 text-lg" onClick={() => setMenuOpen(!menuOpen)}>
-            <NavLink to="/" className={({ isActive }) => isActive ? 'text-sky-600 font-bold' : 'text-slate-700 hover:text-sky-600 font-medium'}>Home</NavLink>
-            <NavLink to="/destination" className={({ isActive }) => isActive ? 'text-sky-600 font-bold' : 'text-slate-700 hover:text-sky-600 font-medium'}>Destinations</NavLink>
-            <NavLink to="/about" className={({ isActive }) => isActive ? 'text-sky-600 font-bold' : 'text-slate-700 hover:text-sky-600 font-medium'}>About</NavLink>
-            
-            <div className="pt-6 border-t border-gray-100 mt-auto">
-              <a
-                href="tel:+919355580007"
-                className="flex items-center justify-center w-full bg-orange-500 text-white font-semibold py-3 px-4 rounded-xl shadow-md hover:bg-orange-600 transition"
+
+          {/* Drawer Links */}
+          <div className="flex flex-col gap-1" onClick={() => setMenuOpen(false)}>
+            {[
+              { to: '/', label: 'Home' },
+              { to: '/destination', label: 'Destinations' },
+              { to: '/about', label: 'About' },
+              { to: '/contact', label: 'Contact' },
+            ].map(({ to, label }) => (
+              <NavLink
+                key={to}
+                to={to}
+                className={({ isActive }) =>
+                  `px-4 py-3 rounded-xl text-lg font-medium transition-colors ${
+                    isActive ? 'text-primary bg-primary/5 font-bold' : 'text-foreground hover:text-primary hover:bg-muted/50'
+                  }`
+                }
               >
-                Call Us: +91 9355580007
-              </a>
-            </div>
+                {label}
+              </NavLink>
+            ))}
+          </div>
+
+          {/* Drawer CTA */}
+          <div className="mt-auto pt-8 border-t border-border">
+            <a
+              href="tel:+919355580007"
+              className="flex items-center justify-center w-full bg-primary text-primary-foreground font-bold py-3.5 px-4 rounded-full text-xs uppercase tracking-widest hover:bg-primary/90 transition"
+            >
+              Call Us: +91 9355580007
+            </a>
           </div>
         </div>
       </div>
-    </header>
+    </nav>
   );
 };
 

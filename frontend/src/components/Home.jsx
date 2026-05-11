@@ -1,13 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Hero from './Hero';
 import Bookus from './Bookus';
 import DestinationSlider from './DestinationSlider';
-import Destinations from './Destinations';
-import About from './About';
-import Testimonial from './Testimonials';
 import ResponsiveVideoPlayer from './ResponsiveVideo';
+import Testimonial from './Testimonials';
+
+// Static destination images
+import rajasthanImg from '../assets/dest-rajasthan.jpg';
+import keralaImg from '../assets/dest-kerala.jpg';
+import goaImg from '../assets/dest-goa.jpg';
+import varanasiImg from '../assets/dest-varanasi.jpg';
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+};
+
+// Destination Mosaic Card
+function DestCard({ className, img, name, caption }) {
+  return (
+    <Link to="/destination" className={`group relative overflow-hidden rounded-2xl ${className || ''}`}>
+      <img
+        src={img}
+        alt={`${name} — ${caption}`}
+        loading="lazy"
+        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4 md:p-6 text-white">
+        <p className="font-display text-lg md:text-2xl">{caption}</p>
+        <p className="text-[10px] font-mono uppercase tracking-widest opacity-80 mt-1">{name}</p>
+      </div>
+    </Link>
+  );
+}
 
 const Home = () => {
   const [contents, setContents] = useState([]);
@@ -29,16 +57,11 @@ const Home = () => {
 
   if (loading) {
     return (
-      <div className="flex h-screen w-screen items-center justify-center bg-slate-50">
-        <div className="w-16 h-16 border-4 border-t-sky-500 border-sky-200 rounded-full animate-spin shadow-sm"></div>
+      <div className="flex h-screen w-screen items-center justify-center bg-background">
+        <div className="w-16 h-16 border-4 border-t-primary border-muted rounded-full animate-spin"></div>
       </div>
     );
   }
-
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-  };
 
   return (
     <main>
@@ -49,39 +72,94 @@ const Home = () => {
         </title>
         <meta
           name="description"
-          content="KavikaTravels offers customized trips to Himachal, Chandigarh, Shimla, Haridwar & Manali. Serving Karnal, Kurukshetra, Radaur, Indri, Ladwa & nearby cities. Book your next tour with us!"
-        />
-        <meta
-          name="keywords"
-          content="KavikaTravels, Tour Packages, Karnal Travel, Kurukshetra Travel, Radaur Trips, Indri Tours, Ladwa Travel, Himachal, Shimla, Chandigarh, Haridwar, Manali"
+          content="KavikaTravels offers customized trips to Himachal, Chandigarh, Shimla, Haridwar & Manali. Serving Karnal, Kurukshetra, Radaur, Indri, Ladwa & nearby cities."
         />
       </Helmet>
 
+      {/* 1. Hero */}
       <Hero />
-      
+
+      {/* 2. Destinations Mosaic */}
+      <section className="px-6 md:px-8 py-24 bg-muted/40">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-between items-end mb-12 gap-6">
+            <div>
+              <h2 className="font-display text-4xl md:text-5xl mb-3 italic">Featured Terrains</h2>
+              <p className="text-muted-foreground">The diverse soul of North India.</p>
+            </div>
+            <Link to="/destination" className="font-mono text-xs uppercase tracking-widest border-b border-primary text-primary pb-1 shrink-0">
+              View All
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-4 gap-4 md:gap-6 auto-rows-[140px] md:auto-rows-[280px]">
+            <DestCard className="col-span-4 md:col-span-2 row-span-2" img={rajasthanImg} name="Rajasthan" caption="The Golden Sands" />
+            <DestCard className="col-span-2" img={keralaImg} name="Kerala" caption="Silent Waters" />
+            <DestCard className="col-span-2 md:col-span-1" img={goaImg} name="Goa" caption="Heritage Coast" />
+            <DestCard className="col-span-2 md:col-span-1" img={varanasiImg} name="Varanasi" caption="Ancient Echoes" />
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Destination Slider (from backend) */}
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeInUp}>
         <DestinationSlider contents={contents} loading={loading} />
       </motion.div>
-      
+
+      {/* 4. Video Section */}
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp}>
         <ResponsiveVideoPlayer />
       </motion.div>
-      
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp}>
+
+      {/* 5. Book in 3 Steps */}
+      {/* <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp}>
         <Bookus />
-      </motion.div>
-      
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }} variants={fadeInUp}>
-        <Destinations contents={contents} />
-      </motion.div>
-      
-      <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp}>
-        <About />
-      </motion.div>
-      
+      </motion.div> */}
+
+      {/* 6. Why Choose Us */}
+      <section className="bg-ink text-cream py-20 px-6 md:px-8">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12">
+          {[
+            { t: "Local Guides", d: "Travel with people who know the roads by heart." },
+            { t: "Best Stays", d: "Handpicked hotels, resorts & homestays." },
+            { t: "Custom Trips", d: "Every itinerary built just for you." },
+            { t: "24/7 Support", d: "We're always a call away." },
+          ].map((f) => (
+            <div key={f.t} className="text-center">
+              <div className="size-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="size-2 bg-primary rounded-full" />
+              </div>
+              <h4 className="font-display italic text-xl mb-3">{f.t}</h4>
+              <p className="text-xs text-cream/60 leading-relaxed uppercase tracking-widest">{f.d}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 7. Testimonials */}
       <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} variants={fadeInUp}>
         <Testimonial />
       </motion.div>
+
+      {/* 8. Final CTA */}
+      <section className="relative py-28 px-6 md:px-8 overflow-hidden">
+        <div className="max-w-3xl mx-auto text-center relative z-10">
+          <h2 className="font-display text-4xl md:text-6xl mb-8 leading-tight">
+            Ready to plan your next <span className="italic">adventure?</span>
+          </h2>
+          <p className="text-lg text-muted-foreground mb-10">
+            Talk to us — we build every trip from scratch, just for you.
+          </p>
+          <a
+            href="tel:+919355580007"
+            className="inline-block bg-primary text-primary-foreground px-12 py-5 rounded-full text-sm font-bold uppercase tracking-widest hover:scale-105 transition-transform"
+          >
+            Call +91 9355580007
+          </a>
+        </div>
+        <div className="absolute top-1/2 left-0 w-64 h-64 bg-accent/20 rounded-full -translate-x-1/2 -translate-y-1/2 blur-2xl" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/10 rounded-full translate-x-1/3 translate-y-1/3 blur-2xl" />
+      </section>
     </main>
   );
 };

@@ -15,7 +15,7 @@ const ResponsiveVideoPlayer = () => {
           video.pause();
         }
       },
-      { threshold: 0.5 } // video must be at least 50% in view
+      { threshold: 0.5 }
     );
 
     const currentVideo = videoRef.current;
@@ -27,15 +27,23 @@ const ResponsiveVideoPlayer = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-4xl mx-auto my-8 px-4">
-      <video
-        ref={videoRef}
-        src="https://res.cloudinary.com/dreirplqv/video/upload/v1746800597/sample_kcjlr6.mp4"
-        muted
-        playsInline
-        className="w-full h-auto rounded-2xl shadow-lg"
-      />
-    </div>
+    <section className="px-6 md:px-8 py-24 max-w-7xl mx-auto">
+      <div className="text-center mb-12">
+        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-secondary mb-4">Experience</p>
+        <h2 className="font-display text-4xl md:text-5xl">See It in Motion</h2>
+      </div>
+      <div className="max-w-4xl mx-auto">
+        <div className="rounded-3xl overflow-hidden shadow-2xl ring-1 ring-black/5">
+          <video
+            ref={videoRef}
+            src="https://res.cloudinary.com/dreirplqv/video/upload/v1746800597/sample_kcjlr6.mp4"
+            muted
+            playsInline
+            className="w-full h-auto"
+          />
+        </div>
+      </div>
+    </section>
   );
 };
 

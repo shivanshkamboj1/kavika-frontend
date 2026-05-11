@@ -1,6 +1,8 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import varanasiImg from '../assets/dest-varanasi.jpg';
 import Logo from '/images/image1.png';
 
 const AboutUs = () => {
@@ -27,81 +29,83 @@ const AboutUs = () => {
 
   return (
     <>
-      {/* SEO meta tags */}
       <Helmet>
-        {/* <title>About Us | Kavika Travels</title> */}
         <meta
           name="description"
-          content="Discover Kavika Travels — a trusted tour and travel agency specializing in Karnal, Kurukshetra, Radaur, Indri, Ladwa & nearby cities. Book customized trips to Himachal, Chandigarh & Shimla with KavikaTravels."
+          content="Discover Kavika Travels — a trusted tour and travel agency. Book customized trips to Himachal, Chandigarh & Shimla."
         />
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
       </Helmet>
 
-      {/* Main Content */}
-      <section className="relative bg-slate-50 py-20 px-6 md:px-20 lg:px-32 text-slate-800 min-h-screen overflow-hidden">
-        {/* Colorful Background Blobs */}
-        <div className="absolute top-0 right-0 w-[40vw] h-[40vw] bg-rose-300/30 rounded-full blur-[120px] -z-10 mix-blend-multiply pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[50vw] h-[50vw] bg-sky-300/30 rounded-full blur-[120px] -z-10 mix-blend-multiply pointer-events-none"></div>
+      <section className="px-6 md:px-8 pt-16 pb-20 max-w-5xl mx-auto">
+        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-secondary mb-4">Our Story</p>
+        <h1 className="font-display text-5xl md:text-7xl text-balance leading-[0.95]">
+          A small team with a <span className="italic text-primary">big heart.</span>
+        </h1>
 
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
-          }}
-          className="relative z-10 max-w-5xl mx-auto bg-white/80 backdrop-blur-2xl border border-white/50 rounded-3xl p-10 sm:p-16 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-16"
-        >
+        <div className="grid md:grid-cols-2 gap-12 mt-16 items-start">
+          {/* Image */}
+          <div className="aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-black/5 shadow-lg">
+            <img src={varanasiImg} alt="Beautiful Indian landscape" className="w-full h-full object-cover" />
+          </div>
 
-          {/* Main heading */}
-          <motion.h1 
-            variants={{ hidden: { opacity: 0, y: -20 }, visible: { opacity: 1, y: 0 } }}
-            className="text-4xl sm:text-6xl font-extrabold text-center text-slate-900 tracking-tight drop-shadow-sm"
-          >
-            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-500 to-indigo-600">Us</span>
-          </motion.h1>
-
-          {/* Our Story */}
-          <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="space-y-6">
-            <h2 className="text-3xl font-bold text-slate-900">Our Story</h2>
-            <p className="text-lg leading-relaxed text-slate-600">
-              Kavika Travels was founded by explorers who believe travel is more than just sightseeing — it’s about connection, culture, and discovery. From humble beginnings to becoming a trusted travel partner across North India, our journey has been incredible.
+          {/* Content */}
+          <div className="space-y-6 text-lg leading-relaxed text-muted-foreground">
+            <p>
+              <strong className="text-foreground">Kavika Travels</strong> was founded by explorers who believe travel is more than just sightseeing — it's about connection, culture, and discovery. From humble beginnings to becoming a trusted travel partner across North India, our journey has been incredible.
             </p>
-          </motion.div>
+            <p>
+              We design customized journeys for travelers who want to experience the real India. No cookie-cutter packages — every itinerary is hand-built by people who've actually walked the trails, stayed in the hotels, and shared the meals.
+            </p>
 
-          {/* Why Choose Us */}
-          <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="space-y-6">
-            <h2 className="text-3xl font-bold text-slate-900 flex items-center gap-3">
-              <span className="w-10 h-1 bg-gradient-to-r from-orange-400 to-rose-400 rounded-full"></span> Why Choose Us?
-            </h2>
-            <ul className="list-none space-y-4 text-slate-600 text-lg">
-              <li className="flex items-center gap-3"><span className="text-2xl">🌍</span> Curated tours in over 50 incredible destinations</li>
-              <li className="flex items-center gap-3"><span className="text-2xl">🧭</span> Friendly local guides for authentic experiences</li>
-              <li className="flex items-center gap-3"><span className="text-2xl">🛡️</span> End-to-end travel planning with 24/7 support</li>
-              <li className="flex items-center gap-3"><span className="text-2xl">💬</span> Loved by 10,000+ travelers — 4.9/5 on Google</li>
-            </ul>
-          </motion.div>
-
-          {/* Contact Details */}
-          <motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="pt-10 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-8">
-            <div className="space-y-4 text-lg text-slate-700">
-              <p><span className="font-bold text-sky-600">Contact:</span> Prince</p>
-              <p><span className="font-bold text-sky-600">Address:</span> Plot Number - C6783, Near Deep Chand Bandhu Hospital, Ashok Vihar, Delhi 110052</p>
-              <p><span className="font-bold text-sky-600">Mobile:</span> <a href="tel:+919355580007" className="hover:text-orange-500 transition font-semibold">+91 9355580007</a></p>
-              <p><span className="font-bold text-sky-600">Available:</span> All days, 9 AM – 9 PM</p>
-              <p className='opacity-0'>
-                <a href="/destination" className="text-sky-600 underline">Browse Destinations</a> |{" "}
-                <a href="/contact" className="text-sky-600 underline">Contact Us</a>
-              </p>
+            {/* Why Choose Us */}
+            <div className="mt-8 space-y-4">
+              <h3 className="font-display text-2xl text-foreground italic">Why Choose Us?</h3>
+              <ul className="space-y-3 text-base">
+                <li className="flex items-center gap-3">
+                  <span className="size-2 bg-primary rounded-full shrink-0" />
+                  Curated tours in over 50 incredible destinations
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="size-2 bg-primary rounded-full shrink-0" />
+                  Friendly local guides for authentic experiences
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="size-2 bg-primary rounded-full shrink-0" />
+                  End-to-end travel planning with 24/7 support
+                </li>
+                <li className="flex items-center gap-3">
+                  <span className="size-2 bg-primary rounded-full shrink-0" />
+                  Loved by 10,000+ travelers — 4.9/5 on Google
+                </li>
+              </ul>
             </div>
-            <img
-              src={Logo}
-              alt="Kavika Travels company logo"
-              className="h-28 w-auto drop-shadow-xl"
-              loading="lazy"
-            />
-          </motion.div>
+
+            <Link to="/contact" className="inline-block mt-6 bg-primary text-primary-foreground px-8 py-3.5 rounded-full text-xs font-bold uppercase tracking-widest hover:scale-105 transition-transform">
+              Start a Conversation
+            </Link>
+          </div>
+        </div>
+
+        {/* Contact Details */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="pt-16 mt-16 border-t border-border flex flex-col md:flex-row justify-between items-start md:items-center gap-8"
+        >
+          <div className="space-y-3 text-base text-muted-foreground">
+            <p><span className="font-bold text-foreground">Contact:</span> Prince</p>
+            <p><span className="font-bold text-foreground">Address:</span> Plot Number - C6783, Near Deep Chand Bandhu Hospital, Ashok Vihar, Delhi 110052</p>
+            <p><span className="font-bold text-foreground">Mobile:</span> <a href="tel:+919355580007" className="hover:text-primary transition font-semibold">+91 9355580007</a></p>
+            <p><span className="font-bold text-foreground">Available:</span> All days, 9 AM – 9 PM</p>
+          </div>
+          <img
+            src={Logo}
+            alt="Kavika Travels company logo"
+            className="h-24 w-auto drop-shadow-lg"
+            loading="lazy"
+          />
         </motion.div>
       </section>
     </>
