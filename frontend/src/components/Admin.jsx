@@ -82,6 +82,7 @@ const Admin = () => {
       {showForm && (
         <ContentForm
           apiUrl={apiUrl}
+          cloudName={cloudName}
           initial={editing}
           onClose={() => { setShowForm(false); setEditing(null); }}
           onSaved={() => { setShowForm(false); setEditing(null); fetchContents(); }}
@@ -115,7 +116,15 @@ const Admin = () => {
                   <td className="px-6 py-4 font-medium capitalize">{c.name}</td>
                   <td className="px-6 py-4">{c.image?.length || 0}</td>
                   <td className="px-6 py-4">{c.video?.length || 0}</td>
-                  <td className="px-6 py-4">{c.packages?.join(', ') || '—'}</td>
+                  <td className="px-6 py-4">
+                    <div className="flex flex-wrap gap-1.5">
+                      {c.packages?.length ? c.packages.map((pkg, i) => (
+                        <span key={i} className="inline-block bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full">
+                          {pkg}
+                        </span>
+                      )) : <span className="text-muted-foreground">—</span>}
+                    </div>
+                  </td>
                   <td className="px-6 py-4 text-right space-x-3">
                     <button
                       onClick={() => { setEditing(c); setShowForm(true); }}
@@ -151,19 +160,53 @@ const Admin = () => {
   );
 };
 
-function ContentForm({ apiUrl, initial, onClose, onSaved }) {
+function ContentForm({ apiUrl, cloudName, initial, onClose, onSaved }) {
   const [busy, setBusy] = useState(false);
+  const [packages, setPackages] = useState(initial?.packages?.length ? initial.packages : ['']);
+  const [removeImageIds, setRemoveImageIds] = useState([]);
+  const [removeVideoIds, setRemoveVideoIds] = useState([]);
+
+  // Existing media (only when editing)
+  const existingImages = initial?.image || [];
+  const existingVideos = initial?.video || [];
+  const existingCover = initial?.coverImage || null;
+
+  const addPackage = () => setPackages([...packages, '']);
+  const removePackage = (idx) => setPackages(packages.filter((_, i) => i !== idx));
+  const updatePackage = (idx, val) => {
+    const next = [...packages];
+    next[idx] = val;
+    setPackages(next);
+  };
+
+  const toggleRemoveImage = (publicId) => {
+    setRemoveImageIds((prev) =>
+      prev.includes(publicId) ? prev.filter((id) => id !== publicId) : [...prev, publicId]
+    );
+  };
+
+  const toggleRemoveVideo = (publicId) => {
+    setRemoveVideoIds((prev) =>
+      prev.includes(publicId) ? prev.filter((id) => id !== publicId) : [...prev, publicId]
+    );
+  };
 
   const submit = async (e) => {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
 
-    // Ensure packages field is properly formatted
-    const packagesVal = fd.get('packages')?.toString().trim();
-    fd.delete('packages');
-    if (packagesVal) {
-      packagesVal.split(',').map(p => p.trim()).filter(Boolean).forEach(p => fd.append('packages', p));
+    // Remove leftover package_* fields (we handle them manually)
+    for (const key of [...fd.keys()]) {
+      if (key.startsWith('package_')) fd.delete(key);
     }
+
+    // Append cleaned packages
+    const cleanPkgs = packages.map((p) => p.trim()).filter(Boolean);
+    cleanPkgs.forEach((p) => fd.append('packages', p));
+
+    // Append removal IDs for existing media
+    removeImageIds.forEach((id) => fd.append('removeImageIds', id));
+    removeVideoIds.forEach((id) => fd.append('removeVideoIds', id));
 
     if (!fd.get('name')?.toString().trim()) {
       alert('Name is required');
@@ -180,6 +223,11 @@ function ContentForm({ apiUrl, initial, onClose, onSaved }) {
     if (fd.get('coverImage') && fd.get('coverImage').size === 0) {
       fd.delete('coverImage');
     }
+    // Clean empty images/videos file inputs
+    const imgFiles = fd.getAll('images');
+    if (imgFiles.length === 1 && imgFiles[0].size === 0) fd.delete('images');
+    const vidFiles = fd.getAll('videos');
+    if (vidFiles.length === 1 && vidFiles[0].size === 0) fd.delete('videos');
 
     setBusy(true);
 
@@ -206,63 +254,217 @@ function ContentForm({ apiUrl, initial, onClose, onSaved }) {
     }
   };
 
-  return (
-    <form onSubmit={submit} className="bg-card p-6 md:p-8 rounded-2xl ring-1 ring-border mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
-      <h2 className="md:col-span-2 font-display text-2xl mb-2">{initial ? 'Edit Destination' : 'New Destination'}</h2>
+  const imgUrl = (publicId, transform = 'w_200,h_150,c_fill') =>
+    `https://res.cloudinary.com/${cloudName}/image/upload/${transform}/${publicId}.jpg`;
+  const vidThumb = (publicId) =>
+    `https://res.cloudinary.com/${cloudName}/video/upload/w_200,h_150,c_fill,so_1/${publicId}.jpg`;
 
+  return (
+    <form onSubmit={submit} className="bg-card p-6 md:p-8 rounded-2xl ring-1 ring-border mb-8 space-y-6">
+      <h2 className="font-display text-2xl">{initial ? 'Edit Destination' : 'New Destination'}</h2>
+
+      {/* ── Name ── */}
       <div className="flex flex-col gap-2">
         <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Name</label>
         <input
           name="name"
           defaultValue={initial?.name}
           required
-          className="rounded-lg border border-input bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          className="rounded-lg border border-input bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary max-w-md"
         />
       </div>
 
-      <div className="flex flex-col gap-2">
-        <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Packages (comma-separated)</label>
-        <input
-          name="packages"
-          defaultValue={initial?.packages?.join(', ')}
-          placeholder="e.g. 3N/4D Shimla, 5N/6D Manali"
-          className="rounded-lg border border-input bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-        />
+      {/* ── Packages: dynamic add/remove ── */}
+      <div className="flex flex-col gap-3">
+        <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Packages</label>
+        <div className="space-y-2 max-w-lg">
+          {packages.map((pkg, idx) => (
+            <div key={idx} className="flex items-center gap-2">
+              <input
+                name={`package_${idx}`}
+                value={pkg}
+                onChange={(e) => updatePackage(idx, e.target.value)}
+                placeholder={`e.g. 3N/4D Shimla ₹10,000`}
+                className="flex-1 rounded-lg border border-input bg-background px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              />
+              {packages.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => removePackage(idx)}
+                  className="shrink-0 size-9 flex items-center justify-center rounded-full bg-destructive/10 text-destructive hover:bg-destructive/20 transition-colors text-lg font-bold"
+                  title="Remove package"
+                >
+                  ×
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+        <button
+          type="button"
+          onClick={addPackage}
+          className="self-start flex items-center gap-1.5 text-xs font-bold uppercase tracking-widest text-primary hover:text-primary/80 transition-colors"
+        >
+          <span className="size-5 rounded-full bg-primary/10 flex items-center justify-center text-sm">+</span>
+          Add Package
+        </button>
       </div>
 
-      <div className="flex flex-col gap-2">
-        <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Cover Image</label>
+      {/* ── Cover Image ── */}
+      <div className="flex flex-col gap-3">
+        <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+          Cover Image {initial && '(upload to replace)'}
+        </label>
+        {existingCover && (
+          <div className="flex items-center gap-4">
+            <img src={imgUrl(existingCover)} alt="Current cover" className="w-24 h-18 object-cover rounded-lg ring-1 ring-border" />
+            <span className="text-xs text-muted-foreground">Current cover</span>
+          </div>
+        )}
         <input
           name="coverImage"
           type="file"
           accept="image/*"
-          className="rounded-lg border border-input bg-background px-4 py-3 text-sm file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-primary/10 file:text-primary"
+          className="rounded-lg border border-input bg-background px-4 py-3 text-sm file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-primary/10 file:text-primary max-w-md"
         />
       </div>
 
+      {/* ── Existing Images (edit mode) ── */}
+      {initial && existingImages.length > 0 && (
+        <div className="flex flex-col gap-3">
+          <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+            Existing Images
+            {removeImageIds.length > 0 && (
+              <span className="ml-2 text-destructive normal-case tracking-normal">
+                ({removeImageIds.length} marked for removal)
+              </span>
+            )}
+          </label>
+          <div className="flex flex-wrap gap-3">
+            {existingImages.map((publicId) => {
+              const markedForRemoval = removeImageIds.includes(publicId);
+              return (
+                <div key={publicId} className="relative group">
+                  <img
+                    src={imgUrl(publicId)}
+                    alt="Destination image"
+                    className={`w-28 h-20 object-cover rounded-lg ring-1 ring-border transition-all ${
+                      markedForRemoval ? 'opacity-30 grayscale' : ''
+                    }`}
+                  />
+                  {markedForRemoval && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-destructive font-bold text-xs bg-card/90 px-2 py-1 rounded-full">REMOVING</span>
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => toggleRemoveImage(publicId)}
+                    className={`absolute -top-2 -right-2 size-6 flex items-center justify-center rounded-full text-xs font-bold shadow-md transition-all ${
+                      markedForRemoval
+                        ? 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                        : 'bg-destructive text-white hover:bg-destructive/80'
+                    }`}
+                    title={markedForRemoval ? 'Undo removal' : 'Mark for removal'}
+                  >
+                    {markedForRemoval ? '↩' : '×'}
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ── Add New Images ── */}
       <div className="flex flex-col gap-2">
-        <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Additional Images</label>
+        <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+          {initial ? 'Add More Images' : 'Images'}
+        </label>
         <input
           name="images"
           type="file"
           accept="image/*"
           multiple
-          className="rounded-lg border border-input bg-background px-4 py-3 text-sm file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-primary/10 file:text-primary"
+          className="rounded-lg border border-input bg-background px-4 py-3 text-sm file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-primary/10 file:text-primary max-w-md"
         />
       </div>
 
-      <div className="flex flex-col gap-2 md:col-span-2">
-        <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Videos</label>
+      {/* ── Existing Videos (edit mode) ── */}
+      {initial && existingVideos.length > 0 && (
+        <div className="flex flex-col gap-3">
+          <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+            Existing Videos
+            {removeVideoIds.length > 0 && (
+              <span className="ml-2 text-destructive normal-case tracking-normal">
+                ({removeVideoIds.length} marked for removal)
+              </span>
+            )}
+          </label>
+          <div className="flex flex-wrap gap-3">
+            {existingVideos.map((publicId) => {
+              const markedForRemoval = removeVideoIds.includes(publicId);
+              return (
+                <div key={publicId} className="relative group">
+                  <div
+                    className={`w-36 h-24 rounded-lg ring-1 ring-border overflow-hidden transition-all ${
+                      markedForRemoval ? 'opacity-30 grayscale' : ''
+                    }`}
+                  >
+                    <img
+                      src={vidThumb(publicId)}
+                      alt="Video thumbnail"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.parentElement.classList.add('bg-muted', 'flex', 'items-center', 'justify-center');
+                        e.target.parentElement.innerHTML = '<span class="text-[10px] text-muted-foreground font-mono uppercase">Video</span>';
+                      }}
+                    />
+                  </div>
+                  {markedForRemoval && (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-destructive font-bold text-xs bg-card/90 px-2 py-1 rounded-full">REMOVING</span>
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => toggleRemoveVideo(publicId)}
+                    className={`absolute -top-2 -right-2 size-6 flex items-center justify-center rounded-full text-xs font-bold shadow-md transition-all ${
+                      markedForRemoval
+                        ? 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+                        : 'bg-destructive text-white hover:bg-destructive/80'
+                    }`}
+                    title={markedForRemoval ? 'Undo removal' : 'Mark for removal'}
+                  >
+                    {markedForRemoval ? '↩' : '×'}
+                  </button>
+                  <p className="text-[9px] font-mono text-muted-foreground mt-1 truncate max-w-[144px]" title={publicId}>
+                    {publicId.split('/').pop()}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ── Add New Videos ── */}
+      <div className="flex flex-col gap-2">
+        <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+          {initial ? 'Add More Videos' : 'Videos'}
+        </label>
         <input
           name="videos"
           type="file"
           accept="video/*"
           multiple
-          className="rounded-lg border border-input bg-background px-4 py-3 text-sm file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-primary/10 file:text-primary"
+          className="rounded-lg border border-input bg-background px-4 py-3 text-sm file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-primary/10 file:text-primary max-w-md"
         />
       </div>
 
-      <div className="md:col-span-2 flex gap-3">
+      {/* ── Actions ── */}
+      <div className="flex gap-3 pt-2 border-t border-border">
         <button
           disabled={busy}
           className="bg-primary text-primary-foreground px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest disabled:opacity-60 hover:bg-primary/90 transition-colors"
@@ -276,9 +478,15 @@ function ContentForm({ apiUrl, initial, onClose, onSaved }) {
         >
           Cancel
         </button>
+        {(removeImageIds.length > 0 || removeVideoIds.length > 0) && (
+          <span className="self-center text-xs text-destructive font-medium ml-auto">
+            ⚠ {removeImageIds.length + removeVideoIds.length} media file(s) will be permanently deleted on save
+          </span>
+        )}
       </div>
     </form>
   );
 }
 
 export default Admin;
+
