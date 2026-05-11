@@ -9,49 +9,52 @@ const Navbar = () => {
     `hover:text-primary transition-colors ${isActive ? 'text-primary' : ''}`;
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-border">
-      <div className="max-w-7xl mx-auto px-6 md:px-8 py-4 flex justify-between items-center">
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2">
-          <span className="font-display text-2xl font-bold italic tracking-tight text-primary">Kavika</span>
-          <span className="text-[10px] font-mono uppercase tracking-widest bg-accent/20 text-foreground px-1.5 py-0.5 rounded">Travels</span>
-        </Link>
+    <>
+      {/* ── Navbar bar ── */}
+      <nav className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-border">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 py-4 flex justify-between items-center">
+          {/* Logo */}
+          <Link to="/" className="flex items-center gap-2">
+            <span className="font-display text-2xl font-bold italic tracking-tight text-primary">Kavika</span>
+            <span className="text-[10px] font-mono uppercase tracking-widest bg-accent/20 text-foreground px-1.5 py-0.5 rounded">Travels</span>
+          </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center gap-8 text-sm font-medium uppercase tracking-widest">
-          <NavLink to="/destination" className={linkClass}>Destinations</NavLink>
-          <NavLink to="/about" className={linkClass}>About</NavLink>
-          <NavLink to="/contact" className={linkClass}>Contact</NavLink>
-          <a
-            href="tel:+919355580007"
-            className="bg-primary text-primary-foreground px-5 py-2.5 rounded-full hover:bg-primary/90 transition-transform active:scale-95 text-xs font-bold"
-          >
-            Call: +91 9355580007
-          </a>
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-8 text-sm font-medium uppercase tracking-widest">
+            <NavLink to="/destination" className={linkClass}>Destinations</NavLink>
+            <NavLink to="/about" className={linkClass}>About</NavLink>
+            <NavLink to="/contact" className={linkClass}>Contact</NavLink>
+            <a
+              href="tel:+919355580007"
+              className="bg-primary text-primary-foreground px-5 py-2.5 rounded-full hover:bg-primary/90 transition-transform active:scale-95 text-xs font-bold"
+            >
+              Call: +91 9355580007
+            </a>
+          </div>
+
+          {/* Mobile CTA + Hamburger */}
+          <div className="flex items-center gap-3 lg:hidden">
+            <a
+              href="tel:+919355580007"
+              className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-xs font-medium uppercase tracking-widest"
+            >
+              Call Us
+            </a>
+            <button
+              className="text-foreground p-2 hover:bg-muted rounded-full transition"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle Menu"
+            >
+              {menuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
+            </button>
+          </div>
         </div>
+      </nav>
 
-        {/* Mobile CTA + Hamburger */}
-        <div className="flex items-center gap-3 lg:hidden">
-          <a
-            href="tel:+919355580007"
-            className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-xs font-medium uppercase tracking-widest"
-          >
-            Call Us
-          </a>
-          <button
-            className="text-foreground p-2 hover:bg-muted rounded-full transition"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Toggle Menu"
-          >
-            {menuOpen ? <FaTimes size={22} /> : <FaBars size={22} />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu Overlay */}
+      {/* ── Mobile Menu Overlay (OUTSIDE nav to escape stacking context) ── */}
       <div
-        className={`lg:hidden fixed inset-0 bg-ink/40 backdrop-blur-sm z-40 transition-opacity duration-300 ${
-          menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        className={`lg:hidden fixed inset-0 bg-ink/40 backdrop-blur-sm z-[9999] transition-opacity duration-300 ${
+          menuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'
         }`}
         onClick={() => setMenuOpen(false)}
       >
@@ -105,7 +108,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </nav>
+    </>
   );
 };
 
