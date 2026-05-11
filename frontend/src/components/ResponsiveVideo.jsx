@@ -36,7 +36,7 @@ const ResponsiveVideoPlayer = () => {
         <div className="rounded-3xl overflow-hidden shadow-2xl ring-1 ring-black/5">
           <video
             ref={videoRef}
-            src="https://res.cloudinary.com/dreirplqv/video/upload/v1746800597/sample_kcjlr6.mp4"
+            src="https://www.image2url.com/r2/default/videos/1778526024444-54e34b49-17e5-4fe6-9ddd-55e75256d9aa.mp4"
             muted
             playsInline
             className="w-full h-auto"
