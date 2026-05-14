@@ -1,7 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import varanasiImg from '../assets/dest-varanasi.jpg';
 import Logo from '../assets/Logo.jpeg';
 import { FadeIn, TextReveal } from './AnimationWrappers';
 import { FaUser, FaPhone, FaRegClock, FaMapMarkerAlt } from 'react-icons/fa';

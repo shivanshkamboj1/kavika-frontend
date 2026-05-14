@@ -139,3 +139,22 @@
   100% { transform: scale(1.6); opacity: 0; }
 }
 
+/* ── Mobile scroll optimisation ── */
+@media (pointer: coarse) {
+  /* Remove 300ms tap delay on all touch targets */
+  * {
+    touch-action: manipulation;
+  }
+
+  /* Disable hover effects that cause compositing overhead on touch devices */
+  .group:hover img {
+    transform: none !important;
+  }
+}
+
+/* Render off-screen destination cards lazily for smoother scroll */
+article.group {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 320px;
+}
+

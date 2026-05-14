@@ -12,7 +12,6 @@ import Logo from '../assets/Logo.jpeg';
 import HaridwarImg from '../assets/Haridwar.jpg';
 import ManaliImg from '../assets/Manali.jpg';
 import Tungnath from '../assets/Tungnath.jpg';
-import varanasiImg from '../assets/dest-varanasi.jpg';
 
 // Destination Mosaic Card
 function DestCard({ className, img, name, caption }) {
@@ -101,8 +100,8 @@ const Home = () => {
           <StaggerContainer className="grid grid-cols-4 gap-4 md:gap-6 auto-rows-[140px] md:auto-rows-[280px]" stagger={0.12}>
             <DestCard className="col-span-4 md:col-span-2 row-span-2" img={HaridwarImg} name="Haridwar" caption="Religious Beauty" />
             <DestCard className="col-span-2" img={ManaliImg} name="Manali" />
-            <DestCard className="col-span-2 md:col-span-1" img={Tungnath} name="Tungnath" />
-            <DestCard className="col-span-2 md:col-span-1" img={varanasiImg} name="Varanasi" caption="Ancient Echoes" />
+            <DestCard className="col-span-2" img={Tungnath} name="Tungnath" />
+            {/* <DestCard className="col-span-2 md:col-span-1" img={varanasiImg} name="Varanasi" caption="Ancient Echoes" /> */}
           </StaggerContainer>
         </div>
       </section>
