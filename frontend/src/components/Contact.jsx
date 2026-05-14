@@ -52,7 +52,7 @@ const Contact = () => {
 
         {/* Quick CTAs */}
         <div className="flex flex-col sm:flex-row gap-4 mt-8 mb-12">
-          <a
+          {/* <a
             href="tel:+919355580007"
             className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:scale-105 transition-transform"
           >
@@ -65,7 +65,7 @@ const Contact = () => {
             className="inline-flex items-center justify-center gap-2 border-2 border-foreground px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-foreground hover:text-background transition-all"
           >
             <FaWhatsapp size={16} /> WhatsApp Us
-          </a>
+          </a> */}
         </div>
 
         {/* Contact Form */}
