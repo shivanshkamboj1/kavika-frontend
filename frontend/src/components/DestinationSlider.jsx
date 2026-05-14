@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { cloudinaryUrl, cloudinarySrcSet } from '../utils/cloudinaryUrl';
+import { FadeIn, TextReveal } from './AnimationWrappers';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -58,56 +59,62 @@ const DestinationSlider = ({ contents, loading }) => {
   return (
     <section className="relative w-full py-24 overflow-hidden">
       <div className="text-center mb-16">
-        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-secondary mb-4">Our Journeys</p>
-        <h2 className="font-display text-4xl md:text-5xl">Popular Destinations</h2>
+        <FadeIn>
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-secondary mb-4">Our Journeys</p>
+        </FadeIn>
+        <TextReveal as="h2" className="font-display text-4xl md:text-5xl">
+          Popular Destinations
+        </TextReveal>
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-4 lg:px-20">
-        <Slider {...settings}>
-          {contents.map((ele) => {
-            const firstPackage = ele.packages && ele.packages.length > 0 ? ele.packages[0] : null;
-            return (
-              <div
-                key={ele._id}
-                className="px-3 py-2 cursor-pointer"
-                onClick={() => navigate(`/destinations/${ele._id}`)}
-              >
-                <article className="flex flex-col group">
-                  <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden mb-5 shadow-sm ring-1 ring-black/5">
-                    <img
-                      src={cloudinaryUrl(ele.coverImage, { width: 800 })}
-                      srcSet={cloudinarySrcSet(ele.coverImage, [400, 800, 1200])}
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      alt={ele.name}
-                      width={800}
-                      height={600}
-                      loading="lazy"
-                      decoding="async"
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="flex justify-between items-start mb-3 gap-4 px-1">
-                    <h3 className="font-display text-2xl capitalize">{ele.name}</h3>
-                    {firstPackage && (
-                      <span className="font-mono text-xs font-bold text-primary whitespace-nowrap bg-primary/10 px-2 py-1 rounded-full">
-                        {firstPackage}
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex gap-3 text-[10px] uppercase tracking-widest font-medium text-muted-foreground mb-3 px-1">
-                    <span>{ele.image?.length || 0} Photos</span>
-                    <span className="w-1 h-1 rounded-full bg-border my-auto" />
-                    <span>{ele.video?.length || 0} Videos</span>
-                  </div>
-                  <span className="text-left font-bold text-xs uppercase tracking-widest border-b-2 border-primary w-fit pb-1 hover:text-primary transition-colors px-1">
-                    View Details
-                  </span>
-                </article>
-              </div>
-            );
-          })}
-        </Slider>
-      </div>
+      <FadeIn direction="up" delay={0.2}>
+        <div className="relative max-w-7xl mx-auto px-4 lg:px-20">
+          <Slider {...settings}>
+            {contents.map((ele) => {
+              const firstPackage = ele.packages && ele.packages.length > 0 ? ele.packages[0] : null;
+              return (
+                <div
+                  key={ele._id}
+                  className="px-3 py-2 cursor-pointer"
+                  onClick={() => navigate(`/destinations/${ele._id}`)}
+                >
+                  <article className="flex flex-col group">
+                    <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden mb-5 shadow-sm ring-1 ring-black/5">
+                      <img
+                        src={cloudinaryUrl(ele.coverImage, { width: 800 })}
+                        srcSet={cloudinarySrcSet(ele.coverImage, [400, 800, 1200])}
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        alt={ele.name}
+                        width={800}
+                        height={600}
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="flex justify-between items-start mb-3 gap-4 px-1">
+                      <h3 className="font-display text-2xl capitalize">{ele.name}</h3>
+                      {firstPackage && (
+                        <span className="font-mono text-xs font-bold text-primary whitespace-nowrap bg-primary/10 px-2 py-1 rounded-full">
+                          {firstPackage}
+                        </span>
+                      )}
+                    </div>
+                    <div className="flex gap-3 text-[10px] uppercase tracking-widest font-medium text-muted-foreground mb-3 px-1">
+                      <span>{ele.image?.length || 0} Photos</span>
+                      <span className="w-1 h-1 rounded-full bg-border my-auto" />
+                      <span>{ele.video?.length || 0} Videos</span>
+                    </div>
+                    <span className="text-left font-bold text-xs uppercase tracking-widest border-b-2 border-primary w-fit pb-1 hover:text-primary transition-colors px-1">
+                      View Details
+                    </span>
+                  </article>
+                </div>
+              );
+            })}
+          </Slider>
+        </div>
+      </FadeIn>
     </section>
   );
 };

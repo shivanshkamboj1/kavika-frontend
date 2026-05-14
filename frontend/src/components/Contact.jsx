@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { FaWhatsapp, FaPhone } from 'react-icons/fa';
+import { FadeIn, TextReveal } from './AnimationWrappers';
 
 const Contact = () => {
   const [submitting, setSubmitting] = useState(false);
@@ -42,13 +43,17 @@ const Contact = () => {
       </Helmet>
 
       <section className="px-6 md:px-8 pt-16 pb-24 max-w-4xl mx-auto">
-        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-secondary mb-4">Plan Your Trip</p>
-        <h1 className="font-display text-5xl md:text-7xl text-balance leading-[0.95]">
-          Tell us about the trip you've been <span className="italic text-primary">dreaming of.</span>
-        </h1>
-        <p className="mt-6 text-lg text-muted-foreground max-w-xl">
-          A few sentences is all we need to start. Call us or fill the form below — we reply within 24 hours.
-        </p>
+        <FadeIn>
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-secondary mb-4">Plan Your Trip</p>
+        </FadeIn>
+        <TextReveal as="h1" className="font-display text-5xl md:text-7xl text-balance leading-[0.95]">
+          Tell us about the trip you've been dreaming of.
+        </TextReveal>
+        <FadeIn delay={0.2}>
+          <p className="mt-6 text-lg text-muted-foreground max-w-xl">
+            A few sentences is all we need to start. Call us or fill the form below — we reply within 24 hours.
+          </p>
+        </FadeIn>
 
         {/* Quick CTAs */}
         <div className="flex flex-col sm:flex-row gap-4 mt-8 mb-12">
@@ -69,35 +74,37 @@ const Contact = () => {
         </div>
 
         {/* Contact Form */}
-        <form
-          onSubmit={onSubmit}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-card p-8 md:p-10 rounded-3xl shadow-sm ring-1 ring-border"
-        >
-          <Field label="Your name" name="name" required />
-          <Field label="Phone number" name="phone" type="tel" required />
-          <Field label="Destination of interest" name="destination" placeholder="e.g. Shimla, Manali…" className="md:col-span-2" />
-          <div className="md:col-span-2 flex flex-col gap-2">
-            <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Tell us more</label>
-            <textarea
-              name="message"
-              rows={5}
-              maxLength={2000}
-              className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-              placeholder="When are you thinking of traveling, how many people, what kind of experiences excite you…"
-            />
-          </div>
-          <button
-            disabled={submitting}
-            className="md:col-span-2 justify-self-start bg-primary text-primary-foreground px-10 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:scale-105 transition-transform disabled:opacity-60"
+        <FadeIn direction="up" delay={0.25}>
+          <form
+            onSubmit={onSubmit}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-card p-8 md:p-10 rounded-3xl shadow-sm ring-1 ring-border"
           >
-            {submitting ? 'Sending…' : 'Send via WhatsApp'}
-          </button>
-          {submitted && (
-            <p className="md:col-span-2 text-sm text-secondary font-medium">
-              ✓ Great! You should see a WhatsApp window opening. We'll reply within 24 hours.
-            </p>
-          )}
-        </form>
+            <Field label="Your name" name="name" required />
+            <Field label="Phone number" name="phone" type="tel" required />
+            <Field label="Destination of interest" name="destination" placeholder="e.g. Shimla, Manali…" className="md:col-span-2" />
+            <div className="md:col-span-2 flex flex-col gap-2">
+              <label className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Tell us more</label>
+              <textarea
+                name="message"
+                rows={5}
+                maxLength={2000}
+                className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                placeholder="When are you thinking of traveling, how many people, what kind of experiences excite you…"
+              />
+            </div>
+            <button
+              disabled={submitting}
+              className="md:col-span-2 justify-self-start bg-primary text-primary-foreground px-10 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:scale-105 transition-transform disabled:opacity-60"
+            >
+              {submitting ? 'Sending…' : 'Send via WhatsApp'}
+            </button>
+            {submitted && (
+              <p className="md:col-span-2 text-sm text-secondary font-medium">
+                ✓ Great! You should see a WhatsApp window opening. We'll reply within 24 hours.
+              </p>
+            )}
+          </form>
+        </FadeIn>
       </section>
     </>
   );

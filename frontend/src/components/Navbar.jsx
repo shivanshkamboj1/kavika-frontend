@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const { scrollY } = useScroll();
+  const lastY = useRef(0);
+
+  useMotionValueEvent(scrollY, 'change', (latest) => {
+    const diff = latest - lastY.current;
+    // Only hide after scrolling down past 80px, show immediately on scroll up
+    if (latest > 80 && diff > 5) setHidden(true);
+    if (diff < -5) setHidden(false);
+    lastY.current = latest;
+  });
 
   const linkClass = ({ isActive }) =>
     `hover:text-primary transition-colors ${isActive ? 'text-primary' : ''}`;
@@ -11,7 +23,11 @@ const Navbar = () => {
   return (
     <>
       {/* ── Navbar bar ── */}
-      <nav className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-border">
+      <motion.nav
+        className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-border"
+        animate={{ y: hidden ? '-100%' : '0%' }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="max-w-7xl mx-auto px-6 md:px-8 py-4 flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
@@ -49,7 +65,7 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* ── Mobile Menu Overlay (OUTSIDE nav to escape stacking context) ── */}
       <div

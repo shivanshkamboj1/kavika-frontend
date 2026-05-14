@@ -11,6 +11,7 @@ import Login from './components/Login';
 import Admin from './components/Admin';
 import { AnimatePresence, motion } from 'framer-motion';
 import ScrollToTop from './scroll';
+import FloatingButtons from './components/FloatingButtons';
 
 function App() {
   const location = useLocation();
@@ -38,6 +39,7 @@ function App() {
           <Route path="*" element={<motion.div {...pageTransition}><Navigate to="/" replace /></motion.div>} />
         </Routes>
       </AnimatePresence>
+      {!/^\/(login|admin)/.test(location.pathname) && <FloatingButtons />}
       <Footer />
     </div>
   );
