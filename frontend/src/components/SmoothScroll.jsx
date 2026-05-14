@@ -2,14 +2,20 @@ import { useEffect } from 'react';
 import Lenis from 'lenis';
 
 /**
- * Initializes Lenis smooth scrolling globally.
- * Drop this component anywhere in the React tree (typically App.jsx).
+ * Initializes Lenis smooth scrolling on desktop only.
+ * Mobile/touch devices use native scrolling which is already buttery smooth.
  */
 export default function SmoothScroll() {
   useEffect(() => {
+    // Skip Lenis on touch devices — native scroll is better on mobile
+    const isTouchDevice =
+      'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+    if (isTouchDevice) return;
+
     const lenis = new Lenis({
-      duration: 1.2,          // scroll duration (higher = smoother / slower)
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // ease-out expo
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       smoothWheel: true,
     });
