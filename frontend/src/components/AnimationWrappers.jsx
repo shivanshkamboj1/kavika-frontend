@@ -1,11 +1,19 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useInView, useMotionValue, useSpring, animate } from 'framer-motion';
 
+/* ── Detect touch device once at module level ── */
+const isTouchDevice =
+  typeof window !== 'undefined' &&
+  ('ontouchstart' in window || navigator.maxTouchPoints > 0);
+
 /* ─────────────────────────────────────────────
    FadeIn — scroll-triggered reveal container
    direction: 'up' | 'down' | 'left' | 'right'
+
+   On mobile: smaller offsets, faster duration, no layout-thrashing transforms
    ───────────────────────────────────────────── */
 const directionOffset = { up: [40, 0], down: [-40, 0], left: [-60, 0], right: [60, 0] };
+const mobileOffset    = { up: [16, 0], down: [-16, 0], left: [-20, 0], right: [20, 0] };
 
 export function FadeIn({
   children,
@@ -18,15 +26,21 @@ export function FadeIn({
   ...rest
 }) {
   const axis = direction === 'left' || direction === 'right' ? 'x' : 'y';
-  const [start] = directionOffset[direction];
+  const offsets = isTouchDevice ? mobileOffset : directionOffset;
+  const [start] = offsets[direction];
 
   return (
     <motion.div
       initial={{ opacity: 0, [axis]: start }}
       whileInView={{ opacity: 1, [axis]: 0 }}
       viewport={{ once, amount }}
-      transition={{ duration, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{
+        duration: isTouchDevice ? 0.4 : duration,
+        delay: isTouchDevice ? Math.min(delay, 0.1) : delay,
+        ease: [0.22, 1, 0.36, 1],
+      }}
       className={className}
+      style={{ willChange: 'opacity, transform' }}
       {...rest}
     >
       {children}
@@ -36,6 +50,7 @@ export function FadeIn({
 
 /* ─────────────────────────────────────────────
    TextReveal — word-by-word heading reveal
+   On mobile: simple fade-in instead of per-word stagger
    ───────────────────────────────────────────── */
 export function TextReveal({
   children,
@@ -46,6 +61,24 @@ export function TextReveal({
   once = true,
 }) {
   const text = typeof children === 'string' ? children : '';
+
+  // On mobile, skip per-word stagger (causes many simultaneous observers)
+  if (isTouchDevice) {
+    return (
+      <Tag className={className}>
+        <motion.span
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once, amount: 0.2 }}
+          transition={{ duration: 0.5, delay: Math.min(delay, 0.1), ease: [0.22, 1, 0.36, 1] }}
+          style={{ display: 'inline', willChange: 'opacity, transform' }}
+        >
+          {text}
+        </motion.span>
+      </Tag>
+    );
+  }
+
   const words = text.split(' ');
 
   const containerVariants = {
@@ -91,21 +124,23 @@ export function TextReveal({
 
 /* ─────────────────────────────────────────────
    StaggerContainer + StaggerItem
+   On mobile: reduced stagger delay
    ───────────────────────────────────────────── */
 const staggerContainerVariants = (stagger = 0.1, delayChildren = 0) => ({
   hidden: {},
-  visible: { transition: { staggerChildren: stagger, delayChildren } },
+  visible: { transition: { staggerChildren: isTouchDevice ? 0.05 : stagger, delayChildren } },
 });
 
 const staggerItemVariants = (direction = 'up') => {
   const axis = direction === 'left' || direction === 'right' ? 'x' : 'y';
-  const [start] = directionOffset[direction] || directionOffset.up;
+  const offsets = isTouchDevice ? mobileOffset : directionOffset;
+  const [start] = offsets[direction] || offsets.up;
   return {
     hidden: { opacity: 0, [axis]: start },
     visible: {
       opacity: 1,
       [axis]: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+      transition: { duration: isTouchDevice ? 0.35 : 0.6, ease: [0.22, 1, 0.36, 1] },
     },
   };
 };
@@ -143,11 +178,21 @@ export function StaggerItem({ children, className = '', direction = 'up', ...res
 
 /* ─────────────────────────────────────────────
    ParallaxImage — subtle scroll parallax
+   DISABLED on mobile (causes scroll jank)
    ───────────────────────────────────────────── */
 export function ParallaxImage({ src, alt, className = '', speed = 0.15, ...imgProps }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
   const y = useTransform(scrollYProgress, [0, 1], [`-${speed * 100}%`, `${speed * 100}%`]);
+
+  // On mobile, render a plain image — no parallax
+  if (isTouchDevice) {
+    return (
+      <div className={`overflow-hidden ${className}`} style={{ position: 'relative' }}>
+        <img src={src} alt={alt} className="w-full h-full object-cover" {...imgProps} />
+      </div>
+    );
+  }
 
   return (
     <div ref={ref} className={`overflow-hidden ${className}`} style={{ position: 'relative' }}>
