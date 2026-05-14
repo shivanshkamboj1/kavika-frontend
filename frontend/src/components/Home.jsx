@@ -3,15 +3,14 @@ import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Hero from './Hero';
-import Bookus from './Bookus';
 import DestinationSlider from './DestinationSlider';
 import ResponsiveVideoPlayer from './ResponsiveVideo';
 import Testimonial from './Testimonials';
 
 // Static destination images
-import rajasthanImg from '../assets/dest-rajasthan.jpg';
-import keralaImg from '../assets/dest-kerala.jpg';
-import goaImg from '../assets/dest-goa.jpg';
+import HaridwarImg from '../assets/Haridwar.jpg';
+import ManaliImg from '../assets/Manali.jpg';
+import Tungnath from '../assets/Tungnath.jpg';
 import varanasiImg from '../assets/dest-varanasi.jpg';
 
 const fadeInUp = {
@@ -25,12 +24,15 @@ function DestCard({ className, img, name, caption }) {
     <Link to="/destination" className={`group relative overflow-hidden rounded-2xl ${className || ''}`}>
       <img
         src={img}
-        alt={`${name} — ${caption}`}
+        alt={caption ? `${name} — ${caption}` : name}
         loading="lazy"
+        decoding="async"
+        width={800}
+        height={600}
         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-4 md:p-6 text-white">
-        <p className="font-display text-lg md:text-2xl">{caption}</p>
+        {caption && <p className="font-display text-lg md:text-2xl">{caption}</p>}
         <p className="text-[10px] font-mono uppercase tracking-widest opacity-80 mt-1">{name}</p>
       </div>
     </Link>
@@ -93,9 +95,9 @@ const Home = () => {
           </div>
 
           <div className="grid grid-cols-4 gap-4 md:gap-6 auto-rows-[140px] md:auto-rows-[280px]">
-            <DestCard className="col-span-4 md:col-span-2 row-span-2" img={rajasthanImg} name="Rajasthan" caption="The Golden Sands" />
-            <DestCard className="col-span-2" img={keralaImg} name="Kerala" caption="Silent Waters" />
-            <DestCard className="col-span-2 md:col-span-1" img={goaImg} name="Goa" caption="Heritage Coast" />
+            <DestCard className="col-span-4 md:col-span-2 row-span-2" img={HaridwarImg} name="Haridwar" caption="Religious Beauty" />
+            <DestCard className="col-span-2" img={ManaliImg} name="Manali"  />
+            <DestCard className="col-span-2 md:col-span-1" img={Tungnath} name="Tungnath" />
             <DestCard className="col-span-2 md:col-span-1" img={varanasiImg} name="Varanasi" caption="Ancient Echoes" />
           </div>
         </div>

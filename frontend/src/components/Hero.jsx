@@ -28,12 +28,12 @@ const Hero = () => {
             >
               Explore Destinations
             </button>
-            <a
-              href="tel:+919355580007"
+            <button
+              onClick={() => navigate('/contact')}
               className="inline-block px-10 py-4 bg-primary text-primary-foreground rounded-full font-semibold uppercase tracking-widest text-xs hover:scale-105 transition-transform text-center"
             >
-              Call Us Now
-            </a>
+              Book Now
+            </button>
           </div>
         </div>
       </div>
@@ -47,6 +47,8 @@ const Hero = () => {
               alt="Misty peaks of the Indian Himalayas at golden hour"
               width={1200}
               height={1504}
+              fetchPriority="high"
+              decoding="async"
               className="w-full h-full object-cover"
             />
           </div>

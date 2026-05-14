@@ -2,6 +2,7 @@ import React from 'react';
 import Slider from 'react-slick';
 import { useNavigate } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { cloudinaryUrl, cloudinarySrcSet } from '../utils/cloudinaryUrl';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -25,7 +26,6 @@ const NextArrow = ({ onClick }) => (
 
 const DestinationSlider = ({ contents, loading }) => {
   const navigate = useNavigate();
-  const cloudName = import.meta.env.VITE_CLOUD_NAME;
 
   const settings = {
     dots: true,
@@ -75,8 +75,14 @@ const DestinationSlider = ({ contents, loading }) => {
                 <article className="flex flex-col group">
                   <div className="w-full aspect-[4/3] rounded-2xl overflow-hidden mb-5 shadow-sm ring-1 ring-black/5">
                     <img
-                      src={`https://res.cloudinary.com/${cloudName}/image/upload/${ele.coverImage}.jpg`}
+                      src={cloudinaryUrl(ele.coverImage, { width: 800 })}
+                      srcSet={cloudinarySrcSet(ele.coverImage, [400, 800, 1200])}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       alt={ele.name}
+                      width={800}
+                      height={600}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>

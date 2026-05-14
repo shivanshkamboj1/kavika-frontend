@@ -46,7 +46,7 @@ const AboutUs = () => {
         <div className="grid md:grid-cols-2 gap-12 mt-16 items-start">
           {/* Image */}
           <div className="aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-black/5 shadow-lg">
-            <img src={varanasiImg} alt="Beautiful Indian landscape" className="w-full h-full object-cover" />
+            <img src={varanasiImg} alt="Beautiful Indian landscape" width={800} height={1000} decoding="async" className="w-full h-full object-cover" />
           </div>
 
           {/* Content */}
