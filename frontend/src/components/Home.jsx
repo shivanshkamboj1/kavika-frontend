@@ -6,6 +6,7 @@ import DestinationSlider from './DestinationSlider';
 import ResponsiveVideoPlayer from './ResponsiveVideo';
 import Testimonial from './Testimonials';
 import { FadeIn, TextReveal, StaggerContainer, StaggerItem } from './AnimationWrappers';
+import Logo from '../assets/Logo.jpeg';
 
 // Static destination images
 import HaridwarImg from '../assets/Haridwar.jpg';
@@ -57,7 +58,7 @@ const Home = () => {
   if (loading) {
     return (
       <div className="flex h-screen w-screen items-center justify-center bg-background">
-        <div className="w-16 h-16 border-4 border-t-primary border-muted rounded-full animate-spin"></div>
+        <img src={Logo} alt="Loading..." className="w-24 h-24 rounded-2xl animate-pulse" />
       </div>
     );
   }

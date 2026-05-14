@@ -14,7 +14,7 @@ export function FadeIn({
   duration = 0.7,
   className = '',
   once = true,
-  amount = 0.15,
+  amount = 0.05,
   ...rest
 }) {
   const axis = direction === 'left' || direction === 'right' ? 'x' : 'y';
@@ -71,7 +71,7 @@ export function TextReveal({
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        viewport={{ once, amount: 0.4 }}
+        viewport={{ once, amount: 0.2 }}
         style={{ display: 'inline' }}
         aria-label={text}
       >
@@ -116,7 +116,7 @@ export function StaggerContainer({
   stagger = 0.1,
   delay = 0,
   once = true,
-  amount = 0.1,
+  amount = 0.05,
   ...rest
 }) {
   return (

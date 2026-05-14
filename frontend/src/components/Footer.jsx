@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaFacebook, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import { FadeIn } from './AnimationWrappers';
+import Logo from '../assets/Logo.jpeg';
 
 const Footer = () => (
   <FadeIn direction="up" amount={0.05}>
@@ -9,8 +10,8 @@ const Footer = () => (
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12 mb-16">
         {/* Brand */}
         <div className="max-w-xs">
-          <div className="flex items-center gap-2 mb-6">
-            <span className="font-display text-2xl font-bold italic text-primary">Kavika Travels</span>
+          <div className="flex items-center gap-3 mb-6">
+            <img src={Logo} alt="Kavika Travels" className="h-14 w-auto rounded-xl" />
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">
             Your trusted travel partner across North India. Customized trips to Himachal, Chandigarh, Shimla, Haridwar, Manali & beyond.

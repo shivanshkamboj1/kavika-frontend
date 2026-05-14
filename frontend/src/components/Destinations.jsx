@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet';
 import { cloudinaryUrl, cloudinarySrcSet, cloudinaryVideoUrl } from '../utils/cloudinaryUrl';
 import { FadeIn, TextReveal, StaggerContainer, StaggerItem } from './AnimationWrappers';
+import Logo from '../assets/Logo.jpeg';
 
 const Destinations = ({ contents: passedContents }) => {
   const apiUrl = import.meta.env.VITE_API_URL;
@@ -27,7 +28,7 @@ const Destinations = ({ contents: passedContents }) => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-t-primary border-muted rounded-full animate-spin"></div>
+        <img src={Logo} alt="Loading..." className="w-24 h-24 rounded-2xl animate-pulse" />
       </div>
     );
   }

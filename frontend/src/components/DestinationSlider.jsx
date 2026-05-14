@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { cloudinaryUrl, cloudinarySrcSet } from '../utils/cloudinaryUrl';
 import { FadeIn, TextReveal } from './AnimationWrappers';
+import Logo from '../assets/Logo.jpeg';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -49,7 +50,7 @@ const DestinationSlider = ({ contents, loading }) => {
   if (loading) {
     return (
       <section className="w-full py-20 flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-t-primary border-muted rounded-full animate-spin"></div>
+        <img src={Logo} alt="Loading..." className="w-20 h-20 rounded-2xl animate-pulse" />
       </section>
     );
   }

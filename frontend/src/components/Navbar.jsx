@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { FaBars, FaTimes } from 'react-icons/fa';
 import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
+import Logo from '../assets/Logo.jpeg';
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -31,8 +32,7 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-6 md:px-8 py-4 flex justify-between items-center">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <span className="font-display text-2xl font-bold italic tracking-tight text-primary">Kavika</span>
-            <span className="text-[10px] font-mono uppercase tracking-widest bg-accent/20 text-foreground px-1.5 py-0.5 rounded">Travels</span>
+            <img src={Logo} alt="Kavika Travels" className="h-18 w-auto rounded-lg" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -83,8 +83,7 @@ const Navbar = () => {
           {/* Drawer Header */}
           <div className="flex justify-between items-center mb-10">
             <Link to="/" className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
-              <span className="font-display text-xl font-bold italic text-primary">Kavika</span>
-              <span className="text-[9px] font-mono uppercase tracking-widest bg-accent/20 px-1.5 py-0.5 rounded">Travels</span>
+              <img src={Logo} alt="Kavika Travels" className="h-18 w-auto rounded-lg" />
             </Link>
             <button onClick={() => setMenuOpen(false)} className="text-muted-foreground hover:text-foreground p-2 rounded-full hover:bg-muted">
               <FaTimes size={22} />

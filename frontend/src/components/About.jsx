@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
 import varanasiImg from '../assets/dest-varanasi.jpg';
-import Logo from '/images/image1.png';
+import Logo from '../assets/Logo.jpeg';
 import { FadeIn, TextReveal } from './AnimationWrappers';
 
 const AboutUs = () => {
@@ -105,7 +105,7 @@ const AboutUs = () => {
             <img
               src={Logo}
               alt="Kavika Travels company logo"
-              className="h-24 w-auto drop-shadow-lg"
+              className="h-28 w-auto drop-shadow-lg rounded-2xl"
               loading="lazy"
             />
           </div>
