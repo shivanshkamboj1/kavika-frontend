@@ -28,9 +28,10 @@ const Testimonial = () => {
         {testimonials.map((item, index) => (
           <StaggerItem key={index}>
             <div
-              className="bg-card/80 backdrop-blur-xl p-8 rounded-2xl shadow-sm ring-1 ring-border text-center transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300 relative mt-10 group"
+              className="bg-card/80 backdrop-blur-xl p-8 rounded-2xl shadow-sm ring-1 ring-border text-center transform hover:-translate-y-2 hover:shadow-xl transition-all duration-300 relative group"
             >
               {/* User image */}
+              {/* User image - Commented out for now
               <div className="absolute -top-10 left-1/2 transform -translate-x-1/2">
                 <div className="w-20 h-20 rounded-full p-0.5 bg-gradient-to-tr from-primary to-accent shadow-lg group-hover:scale-110 transition-transform duration-300">
                   <img
@@ -40,9 +41,10 @@ const Testimonial = () => {
                   />
                 </div>
               </div>
+              */}
 
               {/* Name */}
-              <h3 className="text-lg font-display italic mb-3 text-foreground mt-6">
+              <h3 className="text-lg font-display italic mb-3 text-foreground">
                 {item.name}
               </h3>
 

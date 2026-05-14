@@ -4,6 +4,7 @@ import Logo from '../assets/Logo.jpeg';
 
 /**
  * Cinematic splash screen:
+ * 0. Wait for Logo image to load
  * 1. Logo fades in with glow + subtle rotation  (0 → 1.2s)
  * 2. Camera zooms forward — logo scales up to fill screen  (1.2 → 2.8s)
  * 3. Screen whiteout / fade-out to reveal website  (2.8 → 3.5s)
@@ -11,9 +12,20 @@ import Logo from '../assets/Logo.jpeg';
  * Plays only once per browser session via sessionStorage.
  */
 const SplashScreen = ({ onComplete }) => {
-  const [phase, setPhase] = useState('enter');   // 'enter' | 'zoom' | 'done'
+  const [phase, setPhase] = useState('loading');   // 'loading' | 'enter' | 'zoom' | 'done'
 
+  // Safety fallback: if image takes too long (e.g. slow 3G), start anyway after 1.5s
   useEffect(() => {
+    if (phase === 'loading') {
+      const fallback = setTimeout(() => setPhase('enter'), 1500);
+      return () => clearTimeout(fallback);
+    }
+  }, [phase]);
+
+  // Start animation sequence only AFTER phase changes to 'enter'
+  useEffect(() => {
+    if (phase !== 'enter') return;
+
     // Phase 1 → 2: start zoom after logo settles
     const t1 = setTimeout(() => setPhase('zoom'), 1200);
     // Phase 2 → 3: dismiss after zoom completes
@@ -23,7 +35,7 @@ const SplashScreen = ({ onComplete }) => {
     }, 3000);
 
     return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, [onComplete]);
+  }, [phase, onComplete]);
 
   return (
     <AnimatePresence>
@@ -46,7 +58,9 @@ const SplashScreen = ({ onComplete }) => {
             animate={
               phase === 'enter'
                 ? { opacity: 1, scale: 1 }
-                : { opacity: 0, scale: 3 }
+                : phase === 'zoom' 
+                ? { opacity: 0, scale: 3 }
+                : { opacity: 0, scale: 0.5 }
             }
             transition={{ duration: phase === 'enter' ? 1 : 1.5, ease: [0.22, 1, 0.36, 1] }}
           />
@@ -55,13 +69,18 @@ const SplashScreen = ({ onComplete }) => {
           <motion.img
             src={Logo}
             alt="Kavika Travels"
+            onLoad={() => {
+              if (phase === 'loading') setPhase('enter');
+            }}
             className="relative rounded-3xl"
             style={{ willChange: 'transform, opacity' }}
             initial={{ opacity: 0, scale: 0.7, rotate: -6 }}
             animate={
               phase === 'enter'
                 ? { opacity: 1, scale: 1, rotate: 0 }
-                : { opacity: 0, scale: 12, rotate: 2 }
+                : phase === 'zoom'
+                ? { opacity: 0, scale: 12, rotate: 2 }
+                : { opacity: 0, scale: 0.7, rotate: -6 }
             }
             transition={
               phase === 'enter'
@@ -87,7 +106,9 @@ const SplashScreen = ({ onComplete }) => {
               animate={
                 phase === 'enter'
                   ? { opacity: 1, scale: 1 }
-                  : { opacity: 0, scale: 2.5 }
+                  : phase === 'zoom'
+                  ? { opacity: 0, scale: 2.5 }
+                  : { opacity: 0, scale: 0.6 }
               }
               transition={{
                 duration: phase === 'enter' ? 1.2 : 1.4,
