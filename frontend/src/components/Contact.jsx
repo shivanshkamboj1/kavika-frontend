@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { FaWhatsapp, FaPhone } from 'react-icons/fa';
+import { FaWhatsapp, FaPhone, FaUser, FaRegClock, FaMapMarkerAlt } from 'react-icons/fa';
 import { FadeIn, TextReveal } from './AnimationWrappers';
 
 const Contact = () => {
@@ -55,23 +55,6 @@ const Contact = () => {
           </p>
         </FadeIn>
 
-        {/* Quick CTAs */}
-        <div className="flex flex-col sm:flex-row gap-4 mt-8 mb-12">
-          {/* <a
-            href="tel:+919355580007"
-            className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:scale-105 transition-transform"
-          >
-            <FaPhone size={14} /> Call +91 9355580007
-          </a>
-          <a
-            href="https://wa.me/919355580007"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 border-2 border-foreground px-8 py-4 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-foreground hover:text-background transition-all"
-          >
-            <FaWhatsapp size={16} /> WhatsApp Us
-          </a> */}
-        </div>
 
         {/* Contact Form */}
         <FadeIn direction="up" delay={0.25}>
@@ -104,6 +87,51 @@ const Contact = () => {
               </p>
             )}
           </form>
+        </FadeIn>
+        
+        {/* Contact Info Grid */}
+        <FadeIn direction="up" delay={0.15}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-sm mt-12 mb-16 bg-card/50 p-8 rounded-3xl border border-border">
+            <div className="flex items-start gap-4">
+              <div className="bg-primary/10 p-3 rounded-2xl text-primary shrink-0">
+                <FaUser size={18} />
+              </div>
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Contact Person</p>
+                <p className="font-medium text-foreground text-base">Prince</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4">
+              <div className="bg-primary/10 p-3 rounded-2xl text-primary shrink-0">
+                <FaPhone size={18} />
+              </div>
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Mobile Number</p>
+                <a href="tel:+919355580007" className="font-medium text-foreground text-base hover:text-primary transition-colors">+91 9355580007</a>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4">
+              <div className="bg-primary/10 p-3 rounded-2xl text-primary shrink-0">
+                <FaRegClock size={18} />
+              </div>
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Availability</p>
+                <p className="font-medium text-foreground text-base">All days, 9 AM – 9 PM</p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-4 sm:col-span-2">
+              <div className="bg-primary/10 p-3 rounded-2xl text-primary shrink-0">
+                <FaMapMarkerAlt size={18} />
+              </div>
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Office Address</p>
+                <p className="font-medium text-foreground text-base leading-relaxed">Plot Number - C6783, Near Deep Chand Bandhu Hospital, Ashok Vihar, Delhi 110052</p>
+              </div>
+            </div>
+          </div>
         </FadeIn>
       </section>
     </>

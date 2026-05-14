@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import varanasiImg from '../assets/dest-varanasi.jpg';
 import Logo from '../assets/Logo.jpeg';
 import { FadeIn, TextReveal } from './AnimationWrappers';
+import { FaUser, FaPhone, FaRegClock, FaMapMarkerAlt } from 'react-icons/fa';
 
 const AboutUs = () => {
   const schema = {
@@ -96,11 +97,48 @@ const AboutUs = () => {
         {/* Contact Details */}
         <FadeIn direction="up" delay={0.1}>
           <div className="pt-16 mt-16 border-t border-border flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-            <div className="space-y-3 text-base text-muted-foreground">
-              <p><span className="font-bold text-foreground">Contact:</span> Prince</p>
-              <p><span className="font-bold text-foreground">Address:</span> Plot Number - C6783, Near Deep Chand Bandhu Hospital, Ashok Vihar, Delhi 110052</p>
-              <p><span className="font-bold text-foreground">Mobile:</span> <a href="tel:+919355580007" className="hover:text-primary transition font-semibold">+91 9355580007</a></p>
-              <p><span className="font-bold text-foreground">Available:</span> All days, 9 AM – 9 PM</p>
+            <div className="w-full lg:w-2/3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 text-sm">
+                <div className="flex items-start gap-4">
+                  <div className="bg-primary/10 p-3 rounded-2xl text-primary shrink-0">
+                    <FaUser size={18} />
+                  </div>
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Contact Person</p>
+                    <p className="font-medium text-foreground text-base">Prince</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="bg-primary/10 p-3 rounded-2xl text-primary shrink-0">
+                    <FaPhone size={18} />
+                  </div>
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Mobile Number</p>
+                    <a href="tel:+919355580007" className="font-medium text-foreground text-base hover:text-primary transition-colors">+91 9355580007</a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="bg-primary/10 p-3 rounded-2xl text-primary shrink-0">
+                    <FaRegClock size={18} />
+                  </div>
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Availability</p>
+                    <p className="font-medium text-foreground text-base">All days, 9 AM – 9 PM</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 sm:col-span-2">
+                  <div className="bg-primary/10 p-3 rounded-2xl text-primary shrink-0">
+                    <FaMapMarkerAlt size={18} />
+                  </div>
+                  <div>
+                    <p className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Office Address</p>
+                    <p className="font-medium text-foreground text-base leading-relaxed">Plot Number - C6783, Near Deep Chand Bandhu Hospital, Ashok Vihar, Delhi 110052</p>
+                  </div>
+                </div>
+              </div>
             </div>
             <img
               src={Logo}
