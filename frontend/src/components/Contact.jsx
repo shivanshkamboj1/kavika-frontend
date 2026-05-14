@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { FaWhatsapp, FaPhone, FaUser, FaRegClock, FaMapMarkerAlt } from 'react-icons/fa';
 import { FadeIn, TextReveal } from './AnimationWrappers';
 

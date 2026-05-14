@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import 'lenis/dist/lenis.css';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
@@ -22,27 +22,23 @@ function App() {
   // Play splash only once per browser session
   const alreadyPlayed = sessionStorage.getItem('kavika_splash_done') === '1';
   const [showSplash, setShowSplash] = useState(!alreadyPlayed);
-  const [splashExited, setSplashExited] = useState(alreadyPlayed);
 
-  // Lock scroll on both html + body while splash is active
+  // Lock scroll while splash is active
   useEffect(() => {
     if (showSplash) {
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
-    }
-    return () => {
+    } else {
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
-    };
+    }
   }, [showSplash]);
 
-  const handleSplashComplete = () => {
+  // Stable callback — never changes, so SplashScreen timers won't reset
+  const handleSplashComplete = useCallback(() => {
     sessionStorage.setItem('kavika_splash_done', '1');
-    document.documentElement.style.overflow = '';
-    document.body.style.overflow = '';
     setShowSplash(false);
-    setSplashExited(true);
-  };
+  }, []);
 
   const pageTransition = {
     initial: { opacity: 0, y: 20 },
@@ -57,7 +53,7 @@ function App() {
         <SplashScreen onComplete={handleSplashComplete} />
       )}
 
-      {/* Main app — rendered behind splash, revealed when splash exits */}
+      {/* Main app */}
       <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
         <SmoothScroll />
         <ScrollToTop />

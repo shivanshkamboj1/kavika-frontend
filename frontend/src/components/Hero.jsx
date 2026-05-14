@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import heroImg from '../assets/hero-himalayas.jpg';
-import { FadeIn, TextReveal, ParallaxImage } from './AnimationWrappers';
+import { FadeIn, TextReveal } from './AnimationWrappers';
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -50,11 +50,10 @@ const Hero = () => {
       {/* Right Image */}
       <FadeIn direction="right" delay={0.2} className="lg:col-span-7">
         <div className="relative">
-          <ParallaxImage
+          <img
             src={heroImg}
             alt="Misty peaks of the Indian Himalayas at golden hour"
-            className="w-full aspect-[4/5] rounded-3xl ring-1 ring-black/5 shadow-2xl"
-            speed={0.08}
+            className="w-full aspect-[4/5] rounded-3xl ring-1 ring-black/5 shadow-2xl object-cover"
             width={1200}
             height={1504}
             fetchPriority="high"

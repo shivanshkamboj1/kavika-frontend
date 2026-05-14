@@ -182,7 +182,7 @@ export function StaggerItem({ children, className = '', direction = 'up', ...res
    ───────────────────────────────────────────── */
 export function ParallaxImage({ src, alt, className = '', speed = 0.15, ...imgProps }) {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'], layoutEffect: false });
   const y = useTransform(scrollYProgress, [0, 1], [`-${speed * 100}%`, `${speed * 100}%`]);
 
   // On mobile, render a plain image — no parallax

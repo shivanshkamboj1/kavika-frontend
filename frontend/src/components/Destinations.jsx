@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { cloudinaryUrl, cloudinarySrcSet, cloudinaryVideoUrl } from '../utils/cloudinaryUrl';
 import { FadeIn, TextReveal, StaggerContainer, StaggerItem } from './AnimationWrappers';
 import Logo from '../assets/Logo.jpeg';
