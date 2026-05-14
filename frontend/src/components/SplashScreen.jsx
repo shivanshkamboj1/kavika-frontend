@@ -17,18 +17,16 @@ const SplashScreen = ({ onComplete }) => {
     // Phase 1 → 2: start zoom after logo settles
     const t1 = setTimeout(() => setPhase('zoom'), 1200);
     // Phase 2 → 3: dismiss after zoom completes
-    const t2 = setTimeout(() => setPhase('done'), 3000);
+    const t2 = setTimeout(() => {
+      setPhase('done');
+      onComplete?.(); // Unlock scrollbar immediately when fade starts
+    }, 3000);
 
     return () => { clearTimeout(t1); clearTimeout(t2); };
-  }, []);
-
-  // Notify parent once exit animation finishes
-  const handleExitComplete = () => {
-    onComplete?.();
-  };
+  }, [onComplete]);
 
   return (
-    <AnimatePresence onExitComplete={handleExitComplete}>
+    <AnimatePresence>
       {phase !== 'done' && (
         <motion.div
           key="splash"

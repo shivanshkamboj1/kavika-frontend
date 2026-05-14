@@ -40,6 +40,7 @@ function App() {
     sessionStorage.setItem('kavika_splash_done', '1');
     document.documentElement.style.overflow = '';
     document.body.style.overflow = '';
+    setShowSplash(false);
     setSplashExited(true);
   };
 
@@ -57,7 +58,7 @@ function App() {
       )}
 
       {/* Main app — rendered behind splash, revealed when splash exits */}
-      <div className="min-h-screen bg-background text-foreground selection:bg-primary/20 overflow-x-hidden">
+      <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
         <SmoothScroll />
         <ScrollToTop />
         <Navbar />
