@@ -58,7 +58,7 @@ const DestinationSlider = ({ contents, loading }) => {
   if (!contents || contents.length === 0) return null;
 
   return (
-    <section className="relative w-full py-24 overflow-hidden">
+    <section className="relative w-full py-14 md:py-24 overflow-hidden">
       <div className="text-center mb-16">
         <FadeIn>
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-secondary mb-4">Our Journeys</p>

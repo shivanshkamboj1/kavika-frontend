@@ -27,7 +27,7 @@ const ResponsiveVideoPlayer = () => {
   }, []);
 
   return (
-    <section className="px-6 md:px-8 py-24 max-w-7xl mx-auto">
+    <section className="px-6 md:px-8 py-14 md:py-24 max-w-7xl mx-auto">
       <div className="text-center mb-12">
         <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-secondary mb-4">Experience</p>
         <h2 className="font-display text-4xl md:text-5xl">See It in Motion</h2>
