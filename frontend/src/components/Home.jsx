@@ -36,9 +36,55 @@ function DestCard({ className, img, name, caption }) {
   );
 }
 
+// FAQ Accordion Item
+function FAQItem({ question, answer, isOpen, onToggle }) {
+  return (
+    <div className="border-b border-border last:border-b-0">
+      <button
+        onClick={onToggle}
+        className="w-full flex items-center justify-between py-5 text-left group"
+      >
+        <span className="font-display text-base md:text-lg pr-4">{question}</span>
+        <span
+          className={`text-primary text-xl shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
+        >
+          +
+        </span>
+      </button>
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-out ${
+          isOpen ? 'max-h-48 pb-5 opacity-100' : 'max-h-0 pb-0 opacity-0'
+        }`}
+      >
+        <p className="text-sm text-muted-foreground leading-relaxed">{answer}</p>
+      </div>
+    </div>
+  );
+}
+
+const faqs = [
+  {
+    question: "What destinations do you cover?",
+    answer: "We cover all major North Indian destinations including Himachal Pradesh (Shimla, Manali, Dharamshala), Uttarakhand (Haridwar, Rishikesh, Tungnath), Chandigarh, and many more. Custom routes are also available on request.",
+  },
+  {
+    question: "How do I book a trip?",
+    answer: "You can book by calling us at +91 9355580007, sending a WhatsApp message, or filling out the contact form on our website. We'll get back to you within 24 hours with a custom itinerary.",
+  },
+  {
+    question: "Do you offer customized trip packages?",
+    answer: "Absolutely! Every itinerary is built from scratch based on your preferences — budget, duration, group size, interests, and travel style. No two trips are the same.",
+  },
+  {
+    question: "What are your service areas?",
+    answer: "We primarily serve travelers from Karnal, Kurukshetra, Radaur, Indri, Ladwa, and nearby cities in Haryana. However, we welcome bookings from anywhere in India.",
+  }
+];
+
 const Home = () => {
   const [contents, setContents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [openFaqIndex, setOpenFaqIndex] = useState(null);
   const apiUrl = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -79,9 +125,9 @@ const Home = () => {
       <Hero />
 
       {/* 2. Destinations Mosaic */}
-      <section className="px-6 md:px-8 py-24 bg-muted/40">
+      <section className="px-6 md:px-8 py-14 md:py-24 bg-muted/40">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-end mb-12 gap-6">
+          <div className="flex justify-between items-end mb-8 md:mb-12 gap-6">
             <div>
               <TextReveal as="h2" className="font-display text-4xl md:text-5xl mb-3 italic">
                 Featured Terrains
@@ -101,7 +147,6 @@ const Home = () => {
             <DestCard className="col-span-4 md:col-span-2 row-span-2" img={HaridwarImg} name="Haridwar" caption="Religious Beauty" />
             <DestCard className="col-span-2" img={ManaliImg} name="Manali" />
             <DestCard className="col-span-2" img={Tungnath} name="Tungnath" />
-            {/* <DestCard className="col-span-2 md:col-span-1" img={varanasiImg} name="Varanasi" caption="Ancient Echoes" /> */}
           </StaggerContainer>
         </div>
       </section>
@@ -117,8 +162,8 @@ const Home = () => {
       </FadeIn>
 
       {/* 5. Why Choose Us */}
-      <section className="bg-ink text-cream py-20 px-6 md:px-8">
-        <StaggerContainer className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12" stagger={0.1}>
+      <section className="bg-ink text-cream py-14 md:py-20 px-6 md:px-8">
+        <StaggerContainer className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12" stagger={0.1}>
           {[
             { t: "Local Guides", d: "Travel with people who know the roads by heart." },
             { t: "Best Stays", d: "Handpicked hotels, resorts & homestays." },
@@ -127,7 +172,7 @@ const Home = () => {
           ].map((f) => (
             <StaggerItem key={f.t}>
               <div className="text-center">
-                <div className="size-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="size-12 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6">
                   <div className="size-2 bg-primary rounded-full" />
                 </div>
                 <h4 className="font-display italic text-xl mb-3">{f.t}</h4>
@@ -141,14 +186,42 @@ const Home = () => {
       {/* 6. Testimonials */}
       <Testimonial />
 
-      {/* 7. Final CTA */}
-      <section className="relative py-28 px-6 md:px-8 overflow-hidden">
+      {/* 7. FAQ */}
+      <section className="px-6 md:px-8 py-14 md:py-24 bg-muted/30">
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-10 md:mb-16">
+            <FadeIn>
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-secondary mb-4">FAQ</p>
+            </FadeIn>
+            <TextReveal as="h2" className="font-display text-4xl md:text-5xl">
+              Common Questions
+            </TextReveal>
+          </div>
+
+          <FadeIn direction="up" delay={0.1}>
+            <div className="bg-card rounded-2xl p-6 md:p-10 ring-1 ring-border shadow-sm">
+              {faqs.map((faq, i) => (
+                <FAQItem
+                  key={i}
+                  question={faq.question}
+                  answer={faq.answer}
+                  isOpen={openFaqIndex === i}
+                  onToggle={() => setOpenFaqIndex(openFaqIndex === i ? null : i)}
+                />
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* 8. Final CTA */}
+      <section className="relative py-16 md:py-28 px-6 md:px-8 overflow-hidden">
         <div className="max-w-3xl mx-auto text-center relative z-10">
-          <TextReveal as="h2" className="font-display text-4xl md:text-6xl mb-8 leading-tight">
+          <TextReveal as="h2" className="font-display text-4xl md:text-6xl mb-6 md:mb-8 leading-tight">
             Ready to plan your next adventure?
           </TextReveal>
           <FadeIn delay={0.3}>
-            <p className="text-lg text-muted-foreground mb-10">
+            <p className="text-lg text-muted-foreground mb-8 md:mb-10">
               Talk to us — we build every trip from scratch, just for you.
             </p>
           </FadeIn>
