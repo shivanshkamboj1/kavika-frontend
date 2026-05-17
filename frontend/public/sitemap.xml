@@ -4,42 +4,33 @@
   <!-- Home page -->
   <url>
     <loc>https://www.kavikatravels.in/</loc>
-    <lastmod>2025-06-26</lastmod>
+    <lastmod>2026-05-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Destination list page -->
+  <!-- Destinations listing -->
   <url>
     <loc>https://www.kavikatravels.in/destination</loc>
-    <lastmod>2025-06-26</lastmod>
+    <lastmod>2026-05-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- About page -->
+  <!-- About Us -->
   <url>
     <loc>https://www.kavikatravels.in/about</loc>
-    <lastmod>2025-06-26</lastmod>
+    <lastmod>2026-05-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Example dynamic destination pages -->
-  <!-- <url>
-    <loc>https://www.kavikatravels.in/destinations/paris</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url> -->
-<!-- 
+  <!-- Contact -->
   <url>
-    <loc>https://www.kavikatravels.in/destinations/shimla</loc>
-    <lastmod>2025-06-26</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url> -->
+    <loc>https://www.kavikatravels.in/contact</loc>
+    <lastmod>2026-05-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 
-  <!-- Add all your actual destination slugs here -->
-  
 </urlset>

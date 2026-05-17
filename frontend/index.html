@@ -19,24 +19,103 @@
     />
 
     <meta name="author" content="KavikaTravels" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.kavikatravels.in/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.kavikatravels.in/" />
     <meta property="og:title" content="KavikaTravels | Explore Himachal, Chandigarh & Shimla" />
     <meta property="og:description" content="Your trusted tour and travel partner in Karnal, Kurukshetra, Radaur, Indri, Ladwa & nearby cities. Book customized trips to Himachal, Chandigarh & Shimla with KavikaTravels." />
-    <meta property="og:image" content="/images/image1.png" />
-    <!-- <meta property="og:url" content="https://www.kavikatravels.in" /> -->
+    <meta property="og:image" content="https://www.kavikatravels.in/images/image1.png" />
     <meta property="og:site_name" content="KavikaTravels" />
+    <meta property="og:locale" content="en_IN" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="KavikaTravels | Tour & Travel Experts" />
     <meta name="twitter:description" content="Explore the best of North India with KavikaTravels. Serving Karnal, Kurukshetra, Radaur, Indri, Ladwa & more in Haryana." />
-    <!-- <meta name="twitter:image" content="/images/kavikatravels-twitter.jpg" /> -->
+    <meta name="twitter:image" content="https://www.kavikatravels.in/images/image1.png" />
 
-    <link rel="icon" type="image" href="/images/image1.png" />
+    <!-- Geo targeting for local SEO -->
+    <meta name="geo.region" content="IN-HR" />
+    <meta name="geo.placename" content="Karnal, Haryana" />
+
+    <link rel="icon" type="image/png" href="/images/image1.png" />
+    <link rel="apple-touch-icon" href="/images/image1.png" />
     <link rel="preload" as="image" href="/src/assets/Logo.jpeg" />
-    <!-- <link rel="canonical" href="https://www.kavikatravels.in" /> -->
+
+    <!-- Global Structured Data: Organization + WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "TravelAgency",
+          "@id": "https://www.kavikatravels.in/#organization",
+          "name": "Kavika Travels",
+          "alternateName": "KavikaTravels",
+          "url": "https://www.kavikatravels.in",
+          "logo": "https://www.kavikatravels.in/images/image1.png",
+          "image": "https://www.kavikatravels.in/images/image1.png",
+          "description": "Trusted tour and travel agency serving Karnal, Kurukshetra, Radaur, Indri, Ladwa and nearby cities in Haryana. Customized trips to Himachal, Shimla, Manali, Haridwar & Chandigarh.",
+          "telephone": "+91-9355580007",
+          "email": "kavikatravels@gmail.com",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Plot Number - C6783, Near Deep Chand Bandhu Hospital, Ashok Vihar",
+            "addressLocality": "Delhi",
+            "addressRegion": "DL",
+            "postalCode": "110052",
+            "addressCountry": "IN"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 28.6862,
+            "longitude": 77.1712
+          },
+          "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+            "opens": "09:00",
+            "closes": "21:00"
+          },
+          "areaServed": [
+            { "@type": "City", "name": "Karnal" },
+            { "@type": "City", "name": "Kurukshetra" },
+            { "@type": "City", "name": "Radaur" },
+            { "@type": "City", "name": "Indri" },
+            { "@type": "City", "name": "Ladwa" },
+            { "@type": "State", "name": "Haryana" }
+          ],
+          "priceRange": "₹₹",
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+91-9355580007",
+            "contactType": "customer service",
+            "availableLanguage": ["Hindi", "English"],
+            "areaServed": "IN"
+          },
+          "sameAs": [
+            "https://www.facebook.com/KavikaTravels",
+            "https://www.instagram.com/KavikaTravels"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.kavikatravels.in/#website",
+          "url": "https://www.kavikatravels.in",
+          "name": "KavikaTravels",
+          "publisher": { "@id": "https://www.kavikatravels.in/#organization" },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://www.kavikatravels.in/destination?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

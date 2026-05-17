@@ -52,6 +52,9 @@ const Destinations = ({ contents: passedContents }) => {
             name="description"
             content={`Discover ${dest.name} with KavikaTravels. Book affordable and customized trips.`}
           />
+          <link rel="canonical" href={`https://www.kavikatravels.in/destinations/${dest._id}`} />
+          <meta property="og:title" content={`${dest.name} — KavikaTravels`} />
+          <meta property="og:url" content={`https://www.kavikatravels.in/destinations/${dest._id}`} />
         </Helmet>
 
         <div>
@@ -190,6 +193,9 @@ const Destinations = ({ contents: passedContents }) => {
           name="description"
           content="Browse our exciting travel destinations. Customized trips to Shimla, Haridwar, Manali & more!"
         />
+        <link rel="canonical" href="https://www.kavikatravels.in/destination" />
+        <meta property="og:title" content="Our Destinations — KavikaTravels" />
+        <meta property="og:url" content="https://www.kavikatravels.in/destination" />
       </Helmet>
 
       <div>

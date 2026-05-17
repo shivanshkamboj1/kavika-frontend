@@ -1,7 +1,10 @@
-# Allow all search engines to access all pages
+# Allow all search engines
 User-agent: *
 Allow: /
 
-# Link to your sitemap
+# Block admin/login from indexing
+Disallow: /login
+Disallow: /admin
 
+# Sitemap location
 Sitemap: https://www.kavikatravels.in/sitemap.xml

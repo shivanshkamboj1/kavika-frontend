@@ -38,8 +38,11 @@ const Contact = () => {
   return (
     <>
       <Helmet>
-        <title>Plan Your Trip — Kavika Travels</title>
-        <meta name="description" content="Tell us about the trip you've been dreaming of. Our travel curators reply within 24 hours." />
+        <title>Contact Us | Kavika Travels — Book Your Trip Today</title>
+        <meta name="description" content="Contact Kavika Travels to plan your dream trip. Call +91 9355580007 or fill out our booking form. We reply within 24 hours." />
+        <link rel="canonical" href="https://www.kavikatravels.in/contact" />
+        <meta property="og:title" content="Contact Kavika Travels — Plan Your Trip" />
+        <meta property="og:url" content="https://www.kavikatravels.in/contact" />
       </Helmet>
 
       <section className="px-6 md:px-8 pt-16 pb-24 max-w-4xl mx-auto">

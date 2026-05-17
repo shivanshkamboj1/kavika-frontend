@@ -30,10 +30,14 @@ const AboutUs = () => {
   return (
     <>
       <Helmet>
+        <title>About Us | Kavika Travels — Trusted Tour Agency in Haryana</title>
         <meta
           name="description"
           content="Discover Kavika Travels — a trusted tour and travel agency. Book customized trips to Himachal, Chandigarh & Shimla."
         />
+        <link rel="canonical" href="https://www.kavikatravels.in/about" />
+        <meta property="og:title" content="About Kavika Travels — Our Story" />
+        <meta property="og:url" content="https://www.kavikatravels.in/about" />
         <script type="application/ld+json">{JSON.stringify(schema)}</script>
       </Helmet>
 
