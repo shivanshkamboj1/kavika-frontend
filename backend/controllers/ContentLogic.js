@@ -2,11 +2,36 @@ const Content = require('../models/Photo')
 const cloudinary = require('../config/cloudinary')
 const fs = require('fs/promises')
 
-// Helper to upload one file
-const uploadFile = async (filePath, resourceType = 'image') => {
-  const result = await cloudinary.uploader.upload(filePath, { resource_type: resourceType })
+// Helper to upload one file with quality options
+const uploadFile = async (filePath, resourceType = 'image', opts = {}) => {
+  const uploadOptions = { resource_type: resourceType, ...opts }
+  const result = await cloudinary.uploader.upload(filePath, uploadOptions)
   await fs.unlink(filePath) // delete temp file
   return result.public_id
+}
+
+// Upload presets for different asset types
+const UPLOAD_PRESETS = {
+  // Cover image — high quality, auto format, max 1920px wide
+  coverImage: {
+    quality: 90,
+    fetch_format: 'auto',
+    transformation: [{ width: 1920, crop: 'limit' }],
+    folder: 'kavika/covers',
+  },
+  // Gallery images — compressed, auto format, max 1200px wide
+  galleryImage: {
+    quality: 60,
+    fetch_format: 'auto',
+    transformation: [{ width: 1200, crop: 'limit' }],
+    folder: 'kavika/gallery',
+  },
+  // Videos — compressed with efficient settings
+  video: {
+    quality: 60,
+    resource_type: 'video',
+    folder: 'kavika/videos',
+  },
 }
 
 // POST /contents
@@ -17,17 +42,17 @@ exports.createContent = async (req, res) => {
     if (!name) return res.status(400).json({ message: 'Name is required!' })
     if (!req.files?.coverImage) return res.status(400).json({ message: 'Cover image is required!' })
 
-    // Upload cover image
-    const coverImage = await uploadFile(req.files.coverImage[0].path, 'image')
+    // Upload cover image (high quality)
+    const coverImage = await uploadFile(req.files.coverImage[0].path, 'image', UPLOAD_PRESETS.coverImage)
 
-    // Upload optional images
+    // Upload optional images (compressed)
     const image = req.files.images
-      ? await Promise.all(req.files.images.map((img) => uploadFile(img.path, 'image')))
+      ? await Promise.all(req.files.images.map((img) => uploadFile(img.path, 'image', UPLOAD_PRESETS.galleryImage)))
       : []
 
-    // Upload optional videos
+    // Upload optional videos (compressed)
     const video = req.files.videos
-      ? await Promise.all(req.files.videos.map((vid) => uploadFile(vid.path, 'video')))
+      ? await Promise.all(req.files.videos.map((vid) => uploadFile(vid.path, 'video', UPLOAD_PRESETS.video)))
       : []
 
     // Save to MongoDB
@@ -103,24 +128,24 @@ exports.updateContent = async (req, res) => {
       content.packages = Array.isArray(packages) ? packages : [packages];
     }
 
-    // Replace cover image
+    // Replace cover image (high quality)
     if (req.files?.coverImage?.[0]) {
       await cloudinary.uploader.destroy(content.coverImage, { resource_type: 'image' });
-      content.coverImage = await uploadFile(req.files.coverImage[0].path, 'image');
+      content.coverImage = await uploadFile(req.files.coverImage[0].path, 'image', UPLOAD_PRESETS.coverImage);
     }
 
-    // Append new images
+    // Append new images (compressed)
     if (req.files?.images) {
       const newImages = await Promise.all(
-        req.files.images.map((img) => uploadFile(img.path, 'image'))
+        req.files.images.map((img) => uploadFile(img.path, 'image', UPLOAD_PRESETS.galleryImage))
       );
       content.image.push(...newImages);
     }
 
-    // Append new videos
+    // Append new videos (compressed)
     if (req.files?.videos) {
       const newVideos = await Promise.all(
-        req.files.videos.map((vid) => uploadFile(vid.path, 'video'))
+        req.files.videos.map((vid) => uploadFile(vid.path, 'video', UPLOAD_PRESETS.video))
       );
       content.video.push(...newVideos);
     }
