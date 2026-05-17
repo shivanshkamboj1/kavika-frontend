@@ -12,23 +12,23 @@ const uploadFile = async (filePath, resourceType = 'image', opts = {}) => {
 
 // Upload presets for different asset types
 const UPLOAD_PRESETS = {
-  // Cover image — high quality, auto format, max 1920px wide
+  // Cover image — auto:good preserves visual quality, auto format (WebP/AVIF), max 1600px
   coverImage: {
-    quality: 90,
+    quality: 'auto:good',
     fetch_format: 'auto',
-    transformation: [{ width: 1920, crop: 'limit' }],
+    transformation: [{ width: 1600, crop: 'limit' }],
     folder: 'kavika/covers',
   },
-  // Gallery images — compressed, auto format, max 1200px wide
+  // Gallery images — auto:eco aggressively compresses without visible loss, max 1200px
   galleryImage: {
-    quality: 60,
+    quality: 'auto:eco',
     fetch_format: 'auto',
     transformation: [{ width: 1200, crop: 'limit' }],
     folder: 'kavika/gallery',
   },
-  // Videos — compressed with efficient settings
+  // Videos — auto:eco for smart video compression
   video: {
-    quality: 60,
+    quality: 'auto:eco',
     resource_type: 'video',
     folder: 'kavika/videos',
   },

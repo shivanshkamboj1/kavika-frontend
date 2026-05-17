@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/sitemap-dynamic.xml",
+      "destination": "https://kavika-frontend.vercel.app/sitemap-dynamic.xml"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
